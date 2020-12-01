@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,6 +27,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
@@ -40,6 +45,8 @@ public class MapsActivity extends AppCompatActivity
         OnMapReadyCallback {
 
 //    private GoogleMap mMap;
+    private static final String TAG = MapFragment.class.getSimpleName();
+    private SupportMapFragment mapFragment = null;
 
     /**
      * Request code for location permission request.
@@ -63,13 +70,18 @@ public class MapsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        SupportMapFragment mapFragment =
+        mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //move mylocationButton to the right-bottom
+        Log.d(TAG, "onMapReady()");
+        View mapView = mapFragment.getView();
+        moveCompassButton(mapView);
+
         map = googleMap;
 
         // Add a marker in Sydney and move the camera
@@ -80,8 +92,38 @@ public class MapsActivity extends AppCompatActivity
         map.setOnMyLocationClickListener(this);
         enableMyLocation();
 
+    }
+
+    /**
+     * Move the compass button to the right side, centered vertically.
+     */
+    public void moveCompassButton(View mapView) {
+        try {
+            assert mapView != null; // skip this if the mapView has not been set yet
+
+            Log.d(TAG, "moveCompassButton()");
+
+            // View view = mapView.findViewWithTag("GoogleMapCompass");
+            View view = mapView.findViewWithTag("GoogleMapMyLocationButton");
+
+            // move the compass button to the right side, centered
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+//            set button in middle
+//            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
+//            layoutParams.setMarginEnd(18);
+            //set button in the bottom
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            layoutParams.setMargins(0, 0, 30, 30);
 
 
+            view.setLayoutParams(layoutParams);
+        } catch (Exception ex) {
+            Log.e(TAG, "moveCompassButton() - failed: " + ex.getLocalizedMessage());
+            ex.printStackTrace();
+        }
     }
 
     /**
