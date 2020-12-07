@@ -29,14 +29,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="74dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="75dp"
         android:fontFamily="serif"
         android:text="NDSU"
         android:textColor="@color/bisonYello"
         android:textSize="100sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,14 +45,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="95dp"
         android:layout_marginEnd="96dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="160dp"
         android:fontFamily="sans-serif-light"
         android:text="Map App"
         android:textColor="@color/bisonYello"
         android:textSize="55sp"
         app:layout_constraintBottom_toTopOf="@+id/search_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
