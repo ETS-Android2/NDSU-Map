@@ -1,7 +1,9 @@
 package com.example.campus_map;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -30,6 +33,7 @@ import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -69,10 +73,36 @@ public class MapsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        Toolbar topToolbar = (Toolbar) findViewById(R.id.locationsToolbar);
+        setSupportActionBar(topToolbar);
 
         mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
+        final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
+
+        fromAddressEdit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                startActivity(launchactivity);
+            }
+        });
+
+        toAddressEdit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                startActivity(launchactivity);
+            }
+        });
+
     }
 
     @Override
