@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //public static Context context;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 5);
         //context = this.context;
         int imageRes[] = {R.drawable.aghill, R.drawable.library, R.drawable.minard, R.drawable.qbb, R.drawable.union};
         this.insertData("A. Glenn Hill Center", convertImg(context, imageRes[0]), "AGHill, STEM Building", "Computer Labs", "The state-funded building houses " +
@@ -45,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "create table " + TABLE_NAME + "(" + Building_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Building_col2 + " TEXT, "
                 + Building_col3 + " BLOB, " + Building_col4 + " TEXT, " + Building_col5 + " TEXT, " + Building_col6 + " TEXT)";
         db.execSQL(query);
+
     }
 
     @Override

@@ -14,13 +14,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener()
+        final Button map_btn = (Button)findViewById(R.id.map_btn);
+        final Button search_btn = (Button)findViewById(R.id.search_btn);
+        search_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent launchactivity = new Intent(MainActivity.this, BuildingActivity.class);
+                startActivity(launchactivity);
+            }
+        });
+
+        map_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent launchactivity = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(launchactivity);
             }
         });
