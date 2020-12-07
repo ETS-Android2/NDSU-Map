@@ -11,44 +11,66 @@
         android:id="@+id/search_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="419dp"
+        android:layout_marginBottom="252dp"
         android:width="1.52in"
         android:backgroundTint="@color/common_google_signin_btn_text_dark"
         android:text="Search"
         android:textColor="@color/bisonGreen"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="419dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="75dp"
+        android:fontFamily="serif"
         android:text="NDSU"
         android:textColor="@color/bisonYello"
         android:textSize="100sp"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="127dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="95dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="140dp"
+        android:fontFamily="sans-serif-light"
         android:text="Map App"
         android:textColor="@color/bisonYello"
         android:textSize="55sp"
-        tools:layout_editor_absoluteX="95dp"
-        tools:layout_editor_absoluteY="260dp" />
+        app:layout_constraintBottom_toTopOf="@+id/search_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/map_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="518dp"
+        android:layout_marginBottom="153dp"
         android:width="1.5in"
         android:backgroundTint="@color/common_google_signin_btn_text_dark"
         android:text="View Map"
         android:textColor="@color/bisonGreen"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="518dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
