@@ -1,4 +1,4 @@
-package com.example.application.recyclerviewproject;
+package com.example.campus_map;
 
 public class ExampleItem {
     private int mImageResource;

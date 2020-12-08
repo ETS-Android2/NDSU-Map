@@ -1,7 +1,13 @@
 package com.example.campus_map;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
-public class BuilingSelector extends AppCompatActivity{
+public class BuildingSelector extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -11,7 +17,7 @@ public class BuilingSelector extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.building_selector);
 
-        ArrayList<ExampleItem> exampleList = new ArrayList<>;
+        ArrayList<ExampleItem> exampleList = new ArrayList<>();
 
         //populate exampleList with all database entries as ExampleItem objects
 
