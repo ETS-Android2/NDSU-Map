@@ -1,9 +1,11 @@
 package com.example.campus_map;
 
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +36,8 @@ import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -67,6 +71,8 @@ public class MapsActivity extends AppCompatActivity
 
     private GoogleMap map;
 
+    private RadioButton checkedMode;
+
     private static final float DEFAULT_ZOOM = 15f;
 
     @Override
@@ -82,6 +88,8 @@ public class MapsActivity extends AppCompatActivity
 
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
         final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
+        final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
+        checkedMode = getCheckedMode(modeButtons);
 
         fromAddressEdit.setOnClickListener(new View.OnClickListener()
         {
@@ -100,6 +108,18 @@ public class MapsActivity extends AppCompatActivity
             {
                 Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(launchactivity);
+            }
+        });
+
+        setCheckedModeStyle(modeButtons);
+        modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
+                checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
+
+                checkedMode = (RadioButton) findViewById(checkedId);
+                setCheckedModeStyle(group);
             }
         });
 
@@ -217,6 +237,19 @@ public class MapsActivity extends AppCompatActivity
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    public RadioButton getCheckedMode(RadioGroup modes) {
+        return (RadioButton) findViewById(modes.getCheckedRadioButtonId());
+    }
+
+    private void setCheckedMode(RadioGroup modes, int modeID) {
+        modes.check(modeID);
+    }
+
+    private void setCheckedModeStyle(RadioGroup modes) {
+        getCheckedMode(modes).setBackgroundColor(getResources().getColor(R.color.bisonYello));
+        getCheckedMode(modes).setTextColor(getResources().getColor(R.color.bisonGreen));
     }
 
 //    private GoogleMap mMap;
