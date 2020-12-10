@@ -17,14 +17,14 @@ public class BuildingSelector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.building_selector);
 
-        ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        ArrayList<BuildingItem> exampleList = new ArrayList<>();
 
         //populate exampleList with all database entries as ExampleItem objects
 
         mRecyclerView = findViewById(R.id.recyclerView);
         //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleList);
+        mAdapter = new BuildingAdapter(exampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

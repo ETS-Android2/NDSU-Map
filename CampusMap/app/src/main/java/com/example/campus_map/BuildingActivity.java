@@ -3,25 +3,17 @@ package com.example.campus_map;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Xml;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
 
 //building selector imports
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //end of building selector imports
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BuildingActivity extends AppCompatActivity {
@@ -33,12 +25,12 @@ public class BuildingActivity extends AppCompatActivity {
     private TextView building, altName, dept, info;
     private ImageView img;
 
-    private ArrayList<ExampleItem> exampleList = new ArrayList<>();  //beginning of old buildingselector
+    private ArrayList<BuildingItem> exampleList = new ArrayList<>();  //beginning of old buildingselector
     private ArrayList<String> buildingsToPass = new ArrayList<>();   //mega important arraylist, max size 2
 
     //building selector private fields
     private RecyclerView mRecyclerView;
-    private ExampleAdapter mAdapter;
+    private BuildingAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     //end of building selector private fields
 
@@ -75,18 +67,18 @@ public class BuildingActivity extends AppCompatActivity {
             String altName = element.get(3).toString();
             String dept = element.get(4).toString();
             String info = element.get(5).toString();
-            ExampleItem ex = new ExampleItem(Integer.parseInt(element.get(2).toString()), building, altName, dept, info);
+            BuildingItem ex = new BuildingItem(Integer.parseInt(element.get(2).toString()), building, altName, dept, info);
             exampleList.add(ex);
         }
 
         mRecyclerView = findViewById(R.id.recyclerView);
         //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleList);
+        mAdapter = new BuildingAdapter(exampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener(){
+        mAdapter.setOnItemClickListener(new BuildingAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position){
                 changeItem(position, "Clicked");
