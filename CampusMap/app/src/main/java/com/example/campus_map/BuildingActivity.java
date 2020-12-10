@@ -30,7 +30,7 @@ public class BuildingActivity extends AppCompatActivity {
 
     //building selector private fields
     private RecyclerView mRecyclerView;
-    private ExampleAdapter mAdapter;
+    private BuildingAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     //end of building selector private fields
 
@@ -74,11 +74,11 @@ public class BuildingActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleList);
+        mAdapter = new BuildingAdapter(exampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener(){
+        mAdapter.setOnItemClickListener(new BuildingAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position){
                 changeItem(position, "Clicked");

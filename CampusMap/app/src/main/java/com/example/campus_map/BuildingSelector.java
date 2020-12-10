@@ -24,7 +24,7 @@ public class BuildingSelector extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleList);
+        mAdapter = new BuildingAdapter(exampleList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
