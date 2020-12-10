@@ -13,6 +13,7 @@ import android.util.Xml;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
 
 //building selector imports
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,6 +90,8 @@ public class BuildingActivity extends AppCompatActivity {
             buildingsToPass.Add(mExampleList.get(position).getText1();
             if(buildingsToPass.size==2){
                 //go to map page
+                Intent launchactivity = new Intent(BuildingActivity.this, MapsActivity.class);
+                startActivity(launchactivity);
             }
         }
 
