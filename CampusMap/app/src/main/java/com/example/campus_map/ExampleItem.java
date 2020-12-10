@@ -2,40 +2,40 @@ package com.example.campus_map;
 
 public class ExampleItem {
     private int mImageResource;
-    private String mText1;
-    private String mText2;
-    private String mText3;
-    private String mText4;
+    private String building;
+    private String altName;
+    private String dept;
+    private String info;
 
     public ExampleItem(int imageResource, String text1, String text2, String text3, String text4) {
         mImageResource = imageResource;
-        mText1 = text1;
-        mText2 = text2;
-        mText1 = text3;
-        mText2 = text4;
+        building = text1;
+        altName = text2;
+        dept = text3;
+        info = text4;
     }
 
     public int getImageResource() {
         return mImageResource;
     }
 
-    public String getText1() {
-        return mText1;
+    public String getBuilding() {
+        return building;
     }
 
-    public String getText2() {
-        return mText2;
+    public String getAltName() {
+        return altName;
     }
 
-    public String getText3() {
-        return mText3;
+    public String getDept() {
+        return dept;
     }
 
-    public String getText4() {
-        return mText4;
+    public String getInfo() {
+        return info;
     }
 
     public void changeText2(String text){
-        mText2 = text;
+        altName = text;
     }
 }

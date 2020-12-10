@@ -91,21 +91,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-//    public boolean insertBuildingData(String name, byte[] img, String altName, String dept, String info){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(Building_col2, name);
-//        contentValues.put(Building_col3, img);
-//        contentValues.put(Building_col4, altName);
-//        contentValues.put(Building_col5, dept);
-//        contentValues.put(Building_col6, info);
-//        long result = db.insert(TABLE_NAME, null, contentValues);
-//        if(result == -1)
-//            return false;
-//        else
-//            return true;
-//    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<ArrayList<String>> getBuildingData()
     {

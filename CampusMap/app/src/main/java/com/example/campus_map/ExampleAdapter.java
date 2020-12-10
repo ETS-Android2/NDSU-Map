@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>{
     private ArrayList<ExampleItem> mExampleList;
-    private onItemClickListener mListener;
+    private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -38,7 +38,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             mTextView3 = itemView.findViewById(R.id.textView3);
             mTextView4 = itemView.findViewById(R.id.textView4);
 
-            itemView.setOnClickItemListener(new View.OnClickListener(){
+            itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
                     if (listener != null){
@@ -48,7 +48,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
                         }
                     }
                 }
-            })
+            });
 
         }
     }
@@ -69,10 +69,10 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         ExampleItem currentItem = mExampleList.get(position);
 
         holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
-        holder.mTextView3.setText(currentItem.getText3());
-        holder.mTextView4.setText(currentItem.getText4());
+        holder.mTextView1.setText(currentItem.getBuilding());
+        holder.mTextView2.setText(currentItem.getAltName());
+        holder.mTextView3.setText(currentItem.getDept());
+        holder.mTextView4.setText(currentItem.getAltName());
     }
 
     @Override
