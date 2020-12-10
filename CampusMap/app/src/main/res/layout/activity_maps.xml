@@ -4,17 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mapLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:contentDescription="locator button"
+    android:stateListAnimator="@null"
+    android:textAlignment="textEnd">
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="410dp"
+        android:layout_width="413dp"
         android:layout_height="735dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/locationsToolbar"
@@ -151,6 +157,43 @@
         </RadioGroup>
 
     </androidx.appcompat.widget.Toolbar>
+
+    <ImageButton
+        android:id="@+id/goButton"
+        style="@style/Widget.Design.FloatingActionButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="@color/bisonYello"
+        android:backgroundTintMode="src_in"
+        android:contentDescription="go button"
+        android:elevation="6dp"
+        android:outlineProvider="background"
+        android:scaleX="-1"
+        android:tint="@color/bisonGreen"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toTopOf="@+id/modeToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/abc_vector_test" />
+
+    <ImageButton
+        android:id="@+id/locatorButton"
+        style="@style/Widget.Design.FloatingActionButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/white"
+        android:backgroundTintMode="add"
+        android:contentDescription="locator button"
+        android:elevation="6dp"
+        android:outlineProvider="background"
+        android:tint="@color/black"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toTopOf="@+id/goButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
