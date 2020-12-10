@@ -24,7 +24,7 @@ public class BuildingActivity extends AppCompatActivity {
 
     TextView building, altName, dept, info;
     ImageView img;
-    byte[] imageByte;
+    //byte[] imageByte;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,15 +42,14 @@ public class BuildingActivity extends AppCompatActivity {
         //initialize database
         db = new DatabaseHelper(this);
 
-//        data = db.getBuildingData();
-//        ArrayList firstItem = data.get(0);
-//        building.setText(firstItem.get(1).toString());
-//        imageByte = firstItem.get(2).toString().getBytes();
-//        Bitmap b1 = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
-//        img.setImageBitmap(b1);
-//        altName.setText(firstItem.get(3).toString());
-//        dept.setText(firstItem.get(4).toString());
-//        info.setText(firstItem.get(5).toString());
+        data = db.getBuildingData();
+        // test first Building item in data (works properly)
+        ArrayList firstItem = data.get(0);
+        building.setText(firstItem.get(1).toString());
+        img.setImageResource(Integer.parseInt(firstItem.get(2).toString()));
+        altName.setText(firstItem.get(3).toString());
+        dept.setText(firstItem.get(4).toString());
+        info.setText(firstItem.get(5).toString());
 
 
 
