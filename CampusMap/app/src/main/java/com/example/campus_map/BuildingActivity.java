@@ -14,6 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+//building selector imports
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+//end of building selector imports
+
 import java.util.ArrayList;
 
 public class BuildingActivity extends AppCompatActivity {
@@ -26,11 +32,17 @@ public class BuildingActivity extends AppCompatActivity {
     ImageView img;
     //byte[] imageByte;
 
+    //building selector private fields
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    //end of building selector private fields
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building);
+        setContentView(R.layout.building_selector);
 
         //assign variable
 
@@ -52,7 +64,23 @@ public class BuildingActivity extends AppCompatActivity {
         dept.setText(firstItem.get(4).toString());
         info.setText(firstItem.get(5).toString());
 
+        //beginning of old buildingselector
+        ArrayList<ExampleItem> exampleList = new ArrayList<>();
 
+        //populate exampleList with all database entries as ExampleItem objects
+        for(Object element : data) {
+            ExampleItem ex = new ExampleItem(img, building, altName, dept, info);
+            exampleList.Add(ex);
+        }
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ExampleAdapter(exampleList);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+        //end of old buildingselector
 
 
     }
