@@ -34,7 +34,7 @@ public class BuildingActivity extends AppCompatActivity {
 
     //building selector private fields
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ExampleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     //end of building selector private fields
 
@@ -66,6 +66,8 @@ public class BuildingActivity extends AppCompatActivity {
 
         //beginning of old buildingselector
         ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        //mega important arraylist, max size 2
+        ArrayList<String> buildingsToPass = new ArrayList<>();
 
         //populate exampleList with all database entries as ExampleItem objects
         for(Object element : data) {
@@ -78,8 +80,27 @@ public class BuildingActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new ExampleAdapter(exampleList);
 
+        public void changeItem(int position, String text){
+            mExampleList.get(position).changeText2(text);
+            mAdapter.notifyItemChanged(position);
+        }
+
+        public void passBuildings(int position){
+            buildingsToPass.Add(mExampleList.get(position).getText1();
+            if(buildingsToPass.size==2){
+                //go to map page
+            }
+        }
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnClickListener(new ExampleAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position){
+                changeItem(position, "Clicked");
+                passBuildings(position);
+            }
+        });
         //end of old buildingselector
 
 
