@@ -34,4 +34,8 @@ public class ExampleItem {
     public String getText4() {
         return mText4;
     }
+
+    public void changeText2(String text){
+        mText2 = text;
+    }
 }
