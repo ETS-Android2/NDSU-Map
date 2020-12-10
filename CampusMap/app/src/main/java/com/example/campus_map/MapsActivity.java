@@ -1,10 +1,13 @@
 package com.example.campus_map;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -36,6 +39,7 @@ import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -86,10 +90,29 @@ public class MapsActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        final ImageButton goButton = (ImageButton) findViewById(R.id.goButton);
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
         final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
         final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
         checkedMode = getCheckedMode(modeButtons);
+
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String from = fromAddressEdit.getText().toString();
+                String to = toAddressEdit.getText().toString();
+
+                if (from.equals("") && to.equals("")) {
+                    displayAlertDialog("Please fill in where you are from and where you're going.");
+                } else if (from == "") {
+                    displayAlertDialog("Enter where you are currently located above.");
+                } else if (to == "") {
+                    displayAlertDialog("Enter where you are going above.");
+                } else {
+                    // start routing
+                }
+            }
+        });
 
         fromAddressEdit.setOnClickListener(new View.OnClickListener()
         {
@@ -130,7 +153,19 @@ public class MapsActivity extends AppCompatActivity
         //move mylocationButton to the right-bottom
         Log.d(TAG, "onMapReady()");
         View mapView = mapFragment.getView();
-        moveCompassButton(mapView);
+        View locationButton = mapView.findViewWithTag("GoogleMapMyLocationButton");
+        if (locationButton != null) {
+            locationButton.setVisibility(View.GONE);
+        }
+        findViewById(R.id.locatorButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mapView != null && locationButton != null) {
+                    locationButton.callOnClick();
+                }
+            }
+        });
+        //moveCompassButton(mapView);
 
         map = googleMap;
 
@@ -145,7 +180,7 @@ public class MapsActivity extends AppCompatActivity
     }
 
     /**
-     * Move the compass button to the right side, centered vertically.
+     * Move the compass button to the left bottom corner.
      */
     public void moveCompassButton(View mapView) {
         try {
@@ -159,14 +194,14 @@ public class MapsActivity extends AppCompatActivity
             // move the compass button to the right side, centered
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
 //            set button in middle
 //            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
 //            layoutParams.setMarginEnd(18);
             //set button in the bottom
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-            layoutParams.setMargins(0, 0, 30, 30);
+            layoutParams.setMargins(200, 0, 0, 170);
 
 
             view.setLayoutParams(layoutParams);
@@ -194,7 +229,7 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Moving to current location", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
@@ -250,6 +285,19 @@ public class MapsActivity extends AppCompatActivity
     private void setCheckedModeStyle(RadioGroup modes) {
         getCheckedMode(modes).setBackgroundColor(getResources().getColor(R.color.bisonYello));
         getCheckedMode(modes).setTextColor(getResources().getColor(R.color.bisonGreen));
+    }
+
+    private void displayAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message).setTitle("Missing Address");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
 //    private GoogleMap mMap;
