@@ -17,7 +17,7 @@ public class BuildingSelector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.building_selector);
 
-        ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        ArrayList<BuildingItem> exampleList = new ArrayList<>();
 
         //populate exampleList with all database entries as ExampleItem objects
 

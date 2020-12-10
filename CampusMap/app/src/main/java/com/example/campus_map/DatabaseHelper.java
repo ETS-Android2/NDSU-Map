@@ -24,69 +24,83 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "NDSUMap.db";
-    public static final String TABLE_NAME = "Building_table";
+
+    // building table
+    public static final String TABLE_NAME1 = "Building_table";
     public static final String Building_col1 = "ID";
     public static final String Building_col2 = "Name";
     public static final String Building_col3 = "Image";
     public static final String Building_col4 = "AltName";
     public static final String Building_col5 = "Dept";
     public static final String Building_col6 = "Info";
-    //public static Context context;
+
+    // route table
+    public static final String TABLE_NAME2 = "Route_table";
+    public static final String Route_col1 = "ID";
+    public static final String Route_col2 = "Destination";
+    public static final String Route_col3 = "Starting";
+    public static final String Route_col4 = "Description";
+
+    // direction table
+    public static final String TABLE_NAME3 = "Direction_table";
+    public static final String Direction_col1 = "ID";
+    public static final String Direction_col2 = "RouteID";
+    public static final String Direction_col3 = "Longtitude";
+    public static final String Direction_col4 = "Latitude";
+    public static final String Direction_col5 = "Sequence";
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 7);
-        //context = this.context;
-//        int imageRes[] = {R.drawable.aghill, R.drawable.library, R.drawable.minard, R.drawable.qbb, R.drawable.union};
-//        this.insertBuildingData("A. Glenn Hill Center", convertImg(context, imageRes[0]), "AGHill, STEM Building", "Computer Labs", "The state-funded building houses " +
-//                "classrooms, labs, and study areas, with a focus on science, technology, engineering and mathematics-related courses.");
-//        this.insertBuildingData("Library", convertImg(context, imageRes[1]), "", "Center for Writers, Computer Labs, Libraries, Office of the Ombudsperson", "");
-//        this.insertBuildingData("Minard Hall", convertImg(context, imageRes[2]), "", "Anthropology, College of Arts, Humanities and Social Sciences, College of Science and Mathematics," +
-//                "Department of Communication, Computer Labs, Emergency Management, English, History, Mathematics, Modern Language, Philogophy, Psychology, Sociology","");
-//        this.insertBuildingData("Quentin Burdick Building", convertImg(context, imageRes[3]), "QBB", "Computer Labs, Computer Science, Scomputer Systems Institute, Information Technology Services," +
-//                "ITS Help Desk, Technology Learning and Media Center, Upper Great Plains Transportation Institute", "");
-//        this.insertBuildingData("Memorial Union", convertImg(context, imageRes[4]), "", "Bookstore, Card Center, Design&Sign, One Stop, Student Activities Office, " +
-//                "Student Government, Thundar's Game Room, Union Dining Center, US Bank", "");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // create building table
-        String query = "create table " + TABLE_NAME + "(" + Building_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Building_col2 + " TEXT, "
+        String query = "create table " + TABLE_NAME1 + "(" + Building_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Building_col2 + " TEXT, "
                 + Building_col3 + " INTEGER, " + Building_col4 + " TEXT, " + Building_col5 + " TEXT, " + Building_col6 + " TEXT)";
         db.execSQL(query);
 
         // insert building table data
         int imageRes[] = {R.drawable.aghill, R.drawable.library, R.drawable.minard, R.drawable.qbb, R.drawable.union};
 
-        String aghill = "INSERT INTO " + TABLE_NAME + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String aghill = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
                 "VALUES('A. Glenn Hill Center'," + imageRes[0] + ",'AGHill, STEM Building','Computer Labs','The state-funded building houses " +
                 "classrooms, labs, and study areas, with a focus on science, technology, engineering and mathematics-related courses.' )";
         db.execSQL(aghill);
 
-        String library = "INSERT INTO " + TABLE_NAME + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String library = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
                 "VALUES('Library'," + imageRes[1] + ",'','Center for Writers, Computer Labs, Libraries, Office of the Ombudsperson','' )";
         db.execSQL(library);
 
-        String minard = "INSERT INTO " + TABLE_NAME + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String minard = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
                 "VALUES('Minard Hall'," + imageRes[2] + ",'','Anthropology, College of Arts, Humanities and Social Sciences, College of Science and Mathematics, Department " +
                 "of Communication, Computer Labs, Emergency Management, English, History, Mathematics, Modern Language, Philogophy, Psychology, Sociology','' )";
         db.execSQL(minard);
 
-        String qbb = "INSERT INTO " + TABLE_NAME + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String qbb = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
                 "VALUES('Quentin Burdick Building'," + imageRes[3] + ",'QBB','Computer Labs, Computer Science, Scomputer Systems Institute, Information Technology Services," +
                 "ITS Help Desk, Technology Learning and Media Center, Upper Great Plains Transportation Institute','' )";
         db.execSQL(qbb);
 
-        String union = "INSERT INTO " + TABLE_NAME + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String union = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
                 "VALUES('Memorial Union'," + imageRes[4] + ",'','Bookstore, Card Center, Design&Sign, One Stop, Student Activities Office, Student Government, Thundar\"s Game Room, Union Dining Center, US Bank','' )";
         db.execSQL(union);
+
+        // create route table
+
+        // insert route table data
+
+        // create direction table
+
+        //insert direction table data
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String query = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        String query = "DROP TABLE IF EXISTS " + TABLE_NAME1;
         db.execSQL(query);
         onCreate(db);
     }
@@ -98,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
         ArrayList<String> colData;
         //create cursor to select all value
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME1, null);
         if(cursor.moveToFirst())
         {
             do {
@@ -116,30 +130,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return arrayList;
     }
-
-    //convert image to appropriate type in order to store in table
-//    private byte[] readFile(File file) {
-//        ByteArrayOutputStream bos = null;
-//        try {
-//            //File f = new File(file);
-//            FileInputStream fis = new FileInputStream(file);
-//            byte[] buffer = new byte[1024];
-//            bos = new ByteArrayOutputStream();
-//            for (int len; (len = fis.read(buffer)) != -1;) {
-//                bos.write(buffer, 0, len);
-//            }
-//        } catch (FileNotFoundException e) {
-//            System.err.println(e.getMessage());
-//        } catch (IOException e2) {
-//            System.err.println(e2.getMessage());
-//        }
-//        return bos != null ? bos.toByteArray() : null;
-//    }
-//    private byte[] convertImg(Context context, int res)
-//    {
-//        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), res);
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 80, bos);
-//        return bos.toByteArray();
-//    }
 }
