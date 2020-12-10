@@ -33,6 +33,7 @@ public class BuildingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_building);
 
         //assign variable
+
         building = findViewById(R.id.buildingName);
         altName = findViewById(R.id.altName);
         dept = findViewById(R.id.department);
