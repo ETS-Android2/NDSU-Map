@@ -45,7 +45,6 @@ public class BuildingActivity extends AppCompatActivity {
         building = findViewById(R.id.buildingName);
         altName = findViewById(R.id.altName);
         dept = findViewById(R.id.department);
-        info = findViewById(R.id.info);
         img = findViewById(R.id.buildingImg);
 
         //initialize database
@@ -66,8 +65,7 @@ public class BuildingActivity extends AppCompatActivity {
             String building = element.get(1).toString();
             String altName = element.get(3).toString();
             String dept = element.get(4).toString();
-            String info = element.get(5).toString();
-            BuildingItem ex = new BuildingItem(Integer.parseInt(element.get(2).toString()), building, altName, dept, info);
+            BuildingItem ex = new BuildingItem(Integer.parseInt(element.get(2).toString()), building, altName, dept);
             exampleList.add(ex);
         }
 

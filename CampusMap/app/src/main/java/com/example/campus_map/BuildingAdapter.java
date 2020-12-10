@@ -28,7 +28,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Exampl
         public TextView mTextView1;
         public TextView mTextView2;
         public TextView mTextView3;
-        public TextView mTextView4;
 
         public ExampleViewHolder(View itemView, OnItemClickListener listener){
             super(itemView);
@@ -36,7 +35,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Exampl
             mTextView1 = itemView.findViewById(R.id.textView);
             mTextView2 = itemView.findViewById(R.id.textView2);
             mTextView3 = itemView.findViewById(R.id.textView3);
-            mTextView4 = itemView.findViewById(R.id.textView4);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -72,7 +70,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Exampl
         holder.mTextView1.setText(currentItem.getBuilding());
         holder.mTextView2.setText(currentItem.getAltName());
         holder.mTextView3.setText(currentItem.getDept());
-        holder.mTextView4.setText(currentItem.getAltName());
     }
 
     @Override

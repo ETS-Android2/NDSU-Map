@@ -32,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Building_col3 = "Image";
     public static final String Building_col4 = "AltName";
     public static final String Building_col5 = "Dept";
-    public static final String Building_col6 = "Info";
 
     // route table
     public static final String TABLE_NAME2 = "Route_table";
@@ -59,33 +58,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // create building table
         String query = "create table " + TABLE_NAME1 + "(" + Building_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Building_col2 + " TEXT, "
-                + Building_col3 + " INTEGER, " + Building_col4 + " TEXT, " + Building_col5 + " TEXT, " + Building_col6 + " TEXT)";
+                + Building_col3 + " INTEGER, " + Building_col4 + " TEXT, " + Building_col5 + " TEXT)";
         db.execSQL(query);
 
         // insert building table data
         int imageRes[] = {R.drawable.aghill, R.drawable.library, R.drawable.minard, R.drawable.qbb, R.drawable.union};
 
-        String aghill = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
-                "VALUES('A. Glenn Hill Center'," + imageRes[0] + ",'AGHill, STEM Building','Computer Labs','The state-funded building houses " +
-                "classrooms, labs, and study areas, with a focus on science, technology, engineering and mathematics-related courses.' )";
+        String aghill = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + ") " +
+                "VALUES('A. Glenn Hill Center'," + imageRes[0] + ",'AGHill, STEM Building','Computer Labs')";
         db.execSQL(aghill);
 
-        String library = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
-                "VALUES('Library'," + imageRes[1] + ",'','Center for Writers, Computer Labs, Libraries, Office of the Ombudsperson','' )";
+        String library = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + ") " +
+                "VALUES('Library'," + imageRes[1] + ",'','Center for Writers, Computer Labs, Libraries, Office of the Ombudsperson' )";
         db.execSQL(library);
 
-        String minard = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String minard = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + ") " +
                 "VALUES('Minard Hall'," + imageRes[2] + ",'','Anthropology, College of Arts, Humanities and Social Sciences, College of Science and Mathematics, Department " +
-                "of Communication, Computer Labs, Emergency Management, English, History, Mathematics, Modern Language, Philogophy, Psychology, Sociology','' )";
+                "of Communication, Computer Labs, Emergency Management, English, History, Mathematics, Modern Language, Philogophy, Psychology, Sociology' )";
         db.execSQL(minard);
 
-        String qbb = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
+        String qbb = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + ") " +
                 "VALUES('Quentin Burdick Building'," + imageRes[3] + ",'QBB','Computer Labs, Computer Science, Scomputer Systems Institute, Information Technology Services," +
-                "ITS Help Desk, Technology Learning and Media Center, Upper Great Plains Transportation Institute','' )";
+                "ITS Help Desk, Technology Learning and Media Center, Upper Great Plains Transportation Institute')";
         db.execSQL(qbb);
 
-        String union = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 + "," + Building_col6 +") " +
-                "VALUES('Memorial Union'," + imageRes[4] + ",'','Bookstore, Card Center, Design&Sign, One Stop, Student Activities Office, Student Government, Thundar\"s Game Room, Union Dining Center, US Bank','' )";
+        String union = "INSERT INTO " + TABLE_NAME1 + "(" + Building_col2 + "," + Building_col3 + "," + Building_col4 + "," + Building_col5 +") " +
+                "VALUES('Memorial Union'," + imageRes[4] + ",'','Bookstore, Card Center, Design&Sign, One Stop, Student Activities Office, Student Government, Thundar\"s Game Room, Union Dining Center, US Bank')";
         db.execSQL(union);
 
         // create route table
@@ -123,7 +121,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Building_col3))));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col4)));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col5)));
-                colData.add(cursor.getString(cursor.getColumnIndex(Building_col6)));
                 arrayList.add(colData);
             } while(cursor.moveToNext());
         }

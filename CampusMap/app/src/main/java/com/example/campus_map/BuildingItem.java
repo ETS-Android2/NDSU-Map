@@ -5,14 +5,12 @@ public class BuildingItem {
     private String building;
     private String altName;
     private String dept;
-    private String info;
 
-    public BuildingItem(int imageResource, String text1, String text2, String text3, String text4) {
+    public BuildingItem(int imageResource, String text1, String text2, String text3) {
         mImageResource = imageResource;
         building = text1;
         altName = text2;
         dept = text3;
-        info = text4;
     }
 
     public int getImageResource() {
@@ -29,10 +27,6 @@ public class BuildingItem {
 
     public String getDept() {
         return dept;
-    }
-
-    public String getInfo() {
-        return info;
     }
 
     public void changeText2(String text){
