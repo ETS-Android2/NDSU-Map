@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.textfield.TextInputEditText;
@@ -78,8 +79,10 @@ public class MapsActivity extends AppCompatActivity
 
     //database variable
     private DatabaseHelper db;
+
     private ArrayList<ArrayList<String>> routeData;
     private ArrayList<ArrayList<String>> routeDirection;
+    private ArrayList<ArrayList<String>> buildings;
     private ArrayList<String> route;
     private ArrayList<String> places;
 
@@ -100,25 +103,30 @@ public class MapsActivity extends AppCompatActivity
         final ImageButton goButton = (ImageButton) findViewById(R.id.goButton);
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
         final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
-        final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
-        checkedMode = getCheckedMode(modeButtons);
+        //final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
+        //checkedMode = getCheckedMode(modeButtons);
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String from = fromAddressEdit.getText().toString();
-                String to = toAddressEdit.getText().toString();
-
-                if (from.equals("") && to.equals("")) {
-                    displayAlertDialog("Please fill in where you are from and where you're going.");
-                } else if (from == "") {
-                    displayAlertDialog("Select where you are currently located above.");
-                } else if (to == "") {
-                    displayAlertDialog("Select where you are going above.");
-                } else {
-                    // start routing
-
-                    // get to and from addr
+//                String from = fromAddressEdit.getText().toString();
+//                String to = toAddressEdit.getText().toString();
+//
+//                if (from.equals("") && to.equals("")) {
+//                    displayAlertDialog("Please fill in where you are from and where you're going.");
+//                } else if (from == "") {
+//                    displayAlertDialog("Select where you are currently located above.");
+//                } else if (to == "") {
+//                    displayAlertDialog("Select where you are going above.");
+//                } else {
+//                    // start routing
+//
+//                    // get to and from addr
+//                }
+                if(places == null){
+                    displayAlertDialog("Missing Address", "Please Select Starting and Destination Building");
+                }else{
+                    displayAlertDialog("Route Detail", db.getRouteData(places.get(1), places.get(0)).get(3).toString());
                 }
             }
         });
@@ -143,17 +151,17 @@ public class MapsActivity extends AppCompatActivity
             }
         });
 
-        setCheckedModeStyle(modeButtons);
-        modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
-                checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
-
-                checkedMode = (RadioButton) findViewById(checkedId);
-                setCheckedModeStyle(group);
-            }
-        });
+//        setCheckedModeStyle(modeButtons);
+//        modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
+//                checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
+//
+//                checkedMode = (RadioButton) findViewById(checkedId);
+//                setCheckedModeStyle(group);
+//            }
+//        });
 
 
         // test Route and Direction table
@@ -161,6 +169,7 @@ public class MapsActivity extends AppCompatActivity
         routeData = db.getAllRouteData();
         route = db.getRouteData("Quentin Burdick Building", "Minard Hall");
         routeDirection = db.getRouteDirection(2);
+        buildings = db.getBuildingData();
 
     }
 
@@ -168,6 +177,7 @@ public class MapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         //move mylocationButton to the right-bottom
         Log.d(TAG, "onMapReady()");
+
         View mapView = mapFragment.getView();
         View locationButton = mapView.findViewWithTag("GoogleMapMyLocationButton");
         if (locationButton != null) {
@@ -181,6 +191,7 @@ public class MapsActivity extends AppCompatActivity
                 }
             }
         });
+
         map = googleMap;
         //moveCompassButton(mapView);
 
@@ -201,9 +212,11 @@ public class MapsActivity extends AppCompatActivity
 
             route = db.getRouteData(places.get(1), places.get(0));
             Log.d("routeprint", places.get(0) + places.get(1));
-            Log.d("routeprint", route.get(0));
+            Log.d("routeprint", route.toString());
             routeDirection = db.getRouteDirection(Integer.parseInt(route.get(0)));
             Log.d("routeprint", routeDirection.toString());
+
+
 
 
 //        int size = routeDirection.size();
@@ -215,6 +228,9 @@ public class MapsActivity extends AppCompatActivity
             LatLng Destination = new LatLng(Double.parseDouble(routeDirection.get(size - 1).get(2)), Double.parseDouble(routeDirection.get(size - 1).get(3)));
             boundsBuilder.include(Start);
             boundsBuilder.include(Destination);
+
+            map.addMarker(new MarkerOptions().position(Start).title("You Start From Here"));
+            map.addMarker(new MarkerOptions().position(Destination).title("This is Destination"));
 
 
             for (int i = 0; i < size - 1; i++) {
@@ -228,7 +244,7 @@ public class MapsActivity extends AppCompatActivity
                         new PolylineOptions().add(
                                 new LatLng(srcLat, srcLong),
                                 new LatLng(destLat, destLong)
-                        ).color(Color.BLUE)
+                        ).color(Color.rgb(51, 204, 255))
                 );
             }
 
@@ -241,7 +257,7 @@ public class MapsActivity extends AppCompatActivity
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
-        enableMyLocation();
+        //enableMyLocation();
 
     }
 
@@ -353,9 +369,9 @@ public class MapsActivity extends AppCompatActivity
         getCheckedMode(modes).setTextColor(getResources().getColor(R.color.bisonGreen));
     }
 
-    private void displayAlertDialog(String message) {
+    private void displayAlertDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message).setTitle("Missing Address");
+        builder.setMessage(message).setTitle(title);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
