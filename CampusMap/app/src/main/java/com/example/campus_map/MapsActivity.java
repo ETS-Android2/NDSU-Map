@@ -42,7 +42,10 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -74,6 +77,7 @@ public class MapsActivity extends AppCompatActivity
     private GoogleMap map;
 
     private RadioButton checkedMode;
+    private TextView estTime;
 
     private static final float DEFAULT_ZOOM = 15f;
 
@@ -103,6 +107,7 @@ public class MapsActivity extends AppCompatActivity
         final ImageButton goButton = (ImageButton) findViewById(R.id.goButton);
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
         final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
+        estTime = (TextView) findViewById(R.id.estimateTime);
         //final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
         //checkedMode = getCheckedMode(modeButtons);
 
@@ -253,6 +258,8 @@ public class MapsActivity extends AppCompatActivity
                         ).color(Color.rgb(51, 204, 255))
                 );
             }
+
+            estTime.setText("Estimate Time: " + route.get(4));
 
             map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 800, 800, 0));
 
