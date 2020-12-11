@@ -9,8 +9,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.content.Intent;
 
@@ -66,7 +64,8 @@ public class BuildingActivity extends AppCompatActivity {
             String name = building.get(1).toString();
             String altName = building.get(3).toString();
             String dept = building.get(4).toString();
-            BuildingItem bi = new BuildingItem(Integer.parseInt(building.get(2).toString()), name, altName, dept);
+            int id = Integer.parseInt(building.get(0).toString());
+            BuildingItem bi = new BuildingItem(id, Integer.parseInt(building.get(2).toString()), name, altName, dept);
             buildingList.add(bi);
         }
 
@@ -79,12 +78,8 @@ public class BuildingActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new BuildingAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(int position){
-                //changeItem(position, "Clicked");
-                passBuildings(position);
-                //change color
-                //TextView clicked = findViewById(R.id.textView2);
-                //clicked.setTextColor(Color.parseColor("#FF0000"));
+            public void onItemClick(int id){
+                passBuildings(id);
             }
         });
         //end of old buildingselector

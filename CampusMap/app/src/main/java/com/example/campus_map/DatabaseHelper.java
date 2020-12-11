@@ -215,7 +215,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 colData = new ArrayList<>();
                 colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Building_col1))));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col2)));
-//                colData.add(new String(cursor.getBlob(cursor.getColumnIndex(Building_col3))));
                 colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Building_col3))));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col4)));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col5)));

@@ -5,13 +5,17 @@ public class BuildingItem {
     private String building;
     private String altName;
     private String dept;
+    private int id;
 
-    public BuildingItem(int imageResource, String name, String alternateName, String department) {
+    public BuildingItem(int id, int imageResource, String name, String alternateName, String department) {
+        this.id = id;
         mImageResource = imageResource;
         building = name;
         altName = alternateName;
         dept = department;
     }
+
+    public int getID(){return id;}
 
     public int getImageResource() {
         return mImageResource;

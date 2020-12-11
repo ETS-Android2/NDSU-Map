@@ -9,11 +9,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder>{
-    private ArrayList<BuildingItem> buildingList;
+    private static ArrayList<BuildingItem> buildingList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
@@ -43,7 +44,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                     if (listener != null){
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION){
-                            listener.onItemClick(position);
+                            int id = buildingList.get(position).getID();
+                            listener.onItemClick(id-1);
                         }
                     }
                 }
