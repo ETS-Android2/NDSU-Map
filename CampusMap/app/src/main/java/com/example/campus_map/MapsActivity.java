@@ -6,6 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,7 +26,11 @@ import com.google.android.gms.maps.model.LatLng;
 
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -32,10 +44,12 @@ import androidx.core.content.ContextCompat;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -76,6 +90,7 @@ public class MapsActivity extends AppCompatActivity
     private ArrayList<ArrayList<String>> routeData;
     private ArrayList<ArrayList<String>> routeDirection;
     private ArrayList<String> route;
+    private ArrayList<String> places;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -88,6 +103,8 @@ public class MapsActivity extends AppCompatActivity
         mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        places = getIntent().getStringArrayListExtra("places");
 
         final ImageButton goButton = (ImageButton) findViewById(R.id.goButton);
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
@@ -173,14 +190,64 @@ public class MapsActivity extends AppCompatActivity
                 }
             }
         });
-        //moveCompassButton(mapView);
-
         map = googleMap;
+        //moveCompassButton(mapView);
 
         // Add a marker in Sydney and move the camera
         LatLng ndsu = new LatLng(46.898008230849385, -96.80244942610898);
         //map.addMarker(new MarkerOptions().position(ndsu).title("Marker in Sydney"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(ndsu, DEFAULT_ZOOM));
+
+        //safe check for direct view map
+        if(places != null) {
+
+            TextInputLayout layout = findViewById(R.id.editAddess_Form_Layout);
+            //            //EditText from = findViewById(R.id.editAddess_From);
+            layout.setHint("From: " + places.get(0));
+            TextInputLayout layout_to = findViewById(R.id.editAddess_To_Layout);
+            layout_to.setHint("To: " + places.get(1));
+
+
+            route = db.getRouteData(places.get(1), places.get(0));
+            Log.d("routeprint", places.get(0) + places.get(1));
+            Log.d("routeprint", route.get(0));
+            routeDirection = db.getRouteDirection(Integer.parseInt(route.get(0)));
+            Log.d("routeprint", routeDirection.toString());
+
+
+//        int size = routeDirection.size();
+//        LatLng test = new LatLng(Double.parseDouble(routeDirection.get().toString()),Double.parseDouble(routeDirection.get(i).toString());)
+            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+
+            int size = routeDirection.size();
+            LatLng Start = new LatLng(Double.parseDouble(routeDirection.get(0).get(2)), Double.parseDouble(routeDirection.get(0).get(3)));
+            LatLng Destination = new LatLng(Double.parseDouble(routeDirection.get(size - 1).get(2)), Double.parseDouble(routeDirection.get(size - 1).get(3)));
+            boundsBuilder.include(Start);
+            boundsBuilder.include(Destination);
+
+
+            for (int i = 0; i < size - 1; i++) {
+                Double srcLat = Double.parseDouble(routeDirection.get(i).get(2).toString());
+                Double srcLong = Double.parseDouble(routeDirection.get(i).get(3).toString());
+                Double destLat = Double.parseDouble(routeDirection.get(i + 1).get(2).toString());
+                Double destLong = Double.parseDouble(routeDirection.get(i + 1).get(3).toString());
+
+                // mMap is the Map Object
+                Polyline line = map.addPolyline(
+                        new PolylineOptions().add(
+                                new LatLng(srcLat, srcLong),
+                                new LatLng(destLat, destLong)
+                        )
+                );
+            }
+
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 800, 800, 0));
+
+        }
+
+
+
+
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
         enableMyLocation();

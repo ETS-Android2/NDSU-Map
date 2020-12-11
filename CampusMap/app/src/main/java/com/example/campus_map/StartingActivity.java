@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class StartingActivity extends AppCompatActivity {
+
+    private static final String TAG = "StartingActivity";
 
     private DatabaseHelper db;
 
@@ -98,6 +101,7 @@ public class StartingActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void passBuildings(int position){
         buildingsToPass.add(buildingList.get(position).getBuilding());
         if(buildingsToPass.size() == 1){
@@ -108,6 +112,7 @@ public class StartingActivity extends AppCompatActivity {
             changeItem(position, "Destination");
             //go to map page
             Intent launchactivity = new Intent(StartingActivity.this, MapsActivity.class);
+            launchactivity.putExtra("places", buildingsToPass);
             startActivity(launchactivity);
         }
     }
