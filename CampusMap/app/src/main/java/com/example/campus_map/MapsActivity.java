@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,12 +44,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -79,14 +75,14 @@ public class MapsActivity extends AppCompatActivity
 
     private RadioButton checkedMode;
 
-    private static final String DESTINATION_API_KEY = "AIzaSyC4Sa8NwODZeMd030UPFj8Cp_z-V9CfpqY";
-
     private static final float DEFAULT_ZOOM = 15f;
 
     //database variable
     private DatabaseHelper db;
+
     private ArrayList<ArrayList<String>> routeData;
     private ArrayList<ArrayList<String>> routeDirection;
+    private ArrayList<ArrayList<String>> buildings;
     private ArrayList<String> route;
     private ArrayList<String> places;
 
@@ -107,16 +103,30 @@ public class MapsActivity extends AppCompatActivity
         final ImageButton goButton = (ImageButton) findViewById(R.id.goButton);
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
         final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
-        final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
-        checkedMode = getCheckedMode(modeButtons);
+        //final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
+        //checkedMode = getCheckedMode(modeButtons);
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (places == null) {
-                    displayAlertDialog("Please fill in where you are from and where you're going.");
-                } else {
-                    // show directions
+//                String from = fromAddressEdit.getText().toString();
+//                String to = toAddressEdit.getText().toString();
+//
+//                if (from.equals("") && to.equals("")) {
+//                    displayAlertDialog("Please fill in where you are from and where you're going.");
+//                } else if (from == "") {
+//                    displayAlertDialog("Select where you are currently located above.");
+//                } else if (to == "") {
+//                    displayAlertDialog("Select where you are going above.");
+//                } else {
+//                    // start routing
+//
+//                    // get to and from addr
+//                }
+                if(places == null){
+                    displayAlertDialog("Missing Address", "Please Select Starting and Destination Building");
+                }else{
+                    displayAlertDialog("Route Detail", db.getRouteData(places.get(1), places.get(0)).get(3).toString());
                 }
             }
         });
@@ -141,39 +151,17 @@ public class MapsActivity extends AppCompatActivity
             }
         });
 
-        setCheckedModeStyle(modeButtons);
-        modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                if (places == null) {
-                    displayAlertDialog("Please fill in where you are from and where you're going.");
-                } else {
-                    checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
-                    checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
-
-                    checkedMode = (RadioButton) findViewById(checkedId);
-                    setCheckedModeStyle(group);
-
-                    switch (checkedMode.getId()) {
-                        case R.id.walkButton:
-                            getWalkingRoute();
-                            break;
-                        case R.id.driveButton:
-                            try {
-                                getDrivingRoute();
-                            } catch (IOException ioe) {
-                                Log.d("error", ioe.getMessage());
-                            }
-                            break;
-                        case R.id.busButton:
-                            // getBusRoute();
-                            break;
-                    }
-
-                }
-            }
-        });
+//        setCheckedModeStyle(modeButtons);
+//        modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
+//                checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
+//
+//                checkedMode = (RadioButton) findViewById(checkedId);
+//                setCheckedModeStyle(group);
+//            }
+//        });
 
 
         // test Route and Direction table
@@ -181,6 +169,7 @@ public class MapsActivity extends AppCompatActivity
         routeData = db.getAllRouteData();
         route = db.getRouteData("Quentin Burdick Building", "Minard Hall");
         routeDirection = db.getRouteDirection(2);
+        buildings = db.getBuildingData();
 
     }
 
@@ -188,6 +177,7 @@ public class MapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         //move mylocationButton to the right-bottom
         Log.d(TAG, "onMapReady()");
+
         View mapView = mapFragment.getView();
         View locationButton = mapView.findViewWithTag("GoogleMapMyLocationButton");
         if (locationButton != null) {
@@ -201,6 +191,7 @@ public class MapsActivity extends AppCompatActivity
                 }
             }
         });
+
         map = googleMap;
         //moveCompassButton(mapView);
 
@@ -211,73 +202,63 @@ public class MapsActivity extends AppCompatActivity
 
         //safe check for direct view map
         if(places != null) {
+
             TextInputLayout layout = findViewById(R.id.editAddress_From_Layout);
+            //            //EditText from = findViewById(R.id.editAddess_From);
             layout.setHint("From: " + places.get(0));
             TextInputLayout layout_to = findViewById(R.id.editAddess_To_Layout);
             layout_to.setHint("To: " + places.get(1));
 
-            getWalkingRoute();
-        }
 
-        map.setOnMyLocationButtonClickListener(this);
-        map.setOnMyLocationClickListener(this);
-        enableMyLocation();
-    }
+            route = db.getRouteData(places.get(1), places.get(0));
+            Log.d("routeprint", places.get(0) + places.get(1));
+            Log.d("routeprint", route.toString());
+            routeDirection = db.getRouteDirection(Integer.parseInt(route.get(0)));
+            Log.d("routeprint", routeDirection.toString());
 
-    public void getWalkingRoute() {
-        route = db.getRouteData(places.get(1), places.get(0));
-        Log.d("routeprint", places.get(0) + places.get(1));
-        Log.d("routeprint", route.get(0));
-        routeDirection = db.getRouteDirection(Integer.parseInt(route.get(0)));
-        Log.d("routeprint", routeDirection.toString());
+
 
 
 //        int size = routeDirection.size();
 //        LatLng test = new LatLng(Double.parseDouble(routeDirection.get().toString()),Double.parseDouble(routeDirection.get(i).toString());)
-        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
 
-        int size = routeDirection.size();
-        LatLng Start = new LatLng(Double.parseDouble(routeDirection.get(0).get(2)), Double.parseDouble(routeDirection.get(0).get(3)));
-        LatLng Destination = new LatLng(Double.parseDouble(routeDirection.get(size - 1).get(2)), Double.parseDouble(routeDirection.get(size - 1).get(3)));
-        boundsBuilder.include(Start);
-        boundsBuilder.include(Destination);
+            int size = routeDirection.size();
+            LatLng Start = new LatLng(Double.parseDouble(routeDirection.get(0).get(2)), Double.parseDouble(routeDirection.get(0).get(3)));
+            LatLng Destination = new LatLng(Double.parseDouble(routeDirection.get(size - 1).get(2)), Double.parseDouble(routeDirection.get(size - 1).get(3)));
+            boundsBuilder.include(Start);
+            boundsBuilder.include(Destination);
+
+            map.addMarker(new MarkerOptions().position(Start).title("You Start From Here"));
+            map.addMarker(new MarkerOptions().position(Destination).title("This is Destination"));
 
 
-        for (int i = 0; i < size - 1; i++) {
-            Double srcLat = Double.parseDouble(routeDirection.get(i).get(2).toString());
-            Double srcLong = Double.parseDouble(routeDirection.get(i).get(3).toString());
-            Double destLat = Double.parseDouble(routeDirection.get(i + 1).get(2).toString());
-            Double destLong = Double.parseDouble(routeDirection.get(i + 1).get(3).toString());
+            for (int i = 0; i < size - 1; i++) {
+                Double srcLat = Double.parseDouble(routeDirection.get(i).get(2).toString());
+                Double srcLong = Double.parseDouble(routeDirection.get(i).get(3).toString());
+                Double destLat = Double.parseDouble(routeDirection.get(i + 1).get(2).toString());
+                Double destLong = Double.parseDouble(routeDirection.get(i + 1).get(3).toString());
 
-            // mMap is the Map Object
-            Polyline line = map.addPolyline(
-                    new PolylineOptions().add(
-                            new LatLng(srcLat, srcLong),
-                            new LatLng(destLat, destLong)
-                    )
-            );
+                // mMap is the Map Object
+                Polyline line = map.addPolyline(
+                        new PolylineOptions().add(
+                                new LatLng(srcLat, srcLong),
+                                new LatLng(destLat, destLong)
+                        ).color(Color.rgb(51, 204, 255))
+                );
+            }
+
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 800, 800, 0));
+
         }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 800, 800, 0));
-    }
 
-    public void getDrivingRoute() throws IOException {
-        String origin = places.get(0) + " Fargo, ND";
-        String destination = places.get(1) + " Fargo, ND";
-        String req = String.format("https://maps.googleapis.com/maps/api/directions/json?"
-            + "origin=%s&destination=%s &key=%s", origin, destination, DESTINATION_API_KEY);
 
-        URL url = new URL(req);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        displayAlertDialog("trying...");
-        /* APP CRASHES HERE
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-        } finally {
-            urlConnection.disconnect();
-        }
 
-         */
+        map.setOnMyLocationButtonClickListener(this);
+        map.setOnMyLocationClickListener(this);
+        //enableMyLocation();
+
     }
 
     /**
@@ -388,9 +369,9 @@ public class MapsActivity extends AppCompatActivity
         getCheckedMode(modes).setTextColor(getResources().getColor(R.color.bisonGreen));
     }
 
-    private void displayAlertDialog(String message) {
+    private void displayAlertDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message).setTitle("Missing Address");
+        builder.setMessage(message).setTitle(title);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

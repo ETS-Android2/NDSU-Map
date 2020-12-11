@@ -107,7 +107,8 @@ public class BuildingActivity extends AppCompatActivity {
         buildingsToPass.add(buildingList.get(position).getBuilding());
         if(buildingsToPass.size() == 1){
             changeItem(position, "Starting Point");
-
+            TextView title = findViewById(R.id.SelectTitle);
+            title.setText("Select a Destination Building");
         }
         if(buildingsToPass.size()==2){
             changeItem(position, "Destination");

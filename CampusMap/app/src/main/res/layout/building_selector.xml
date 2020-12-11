@@ -14,8 +14,17 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:subtitleTextColor="@color/white"
-        app:title="Select a Building"
-        app:titleTextColor="@color/bisonYello" />
+        app:titleTextColor="@color/bisonYello" >
+
+        <TextView
+            android:id="@+id/SelectTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Select a Starting Building"
+            android:textColor="@color/bisonYello"
+            android:textSize="30sp"></TextView>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -25,6 +34,8 @@
         android:paddingStart="?attr/listPreferredItemPaddingStart"
         android:paddingTop="16dp"
         android:paddingEnd="?attr/listPreferredItemPaddingEnd"
+
         android:scrollbars="vertical" />
+
 
 </LinearLayout>

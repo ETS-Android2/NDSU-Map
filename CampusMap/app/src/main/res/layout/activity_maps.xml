@@ -19,7 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
 
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationsToolbar"
         app:layout_constraintVertical_bias="1.0" />
@@ -104,63 +103,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/modeToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bisonGreen"
-        android:elevation="5dp"
-        android:gravity="center|center_horizontal"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:contentInsetStart="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <RadioGroup
-            android:id="@+id/modeButtonGroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="462dp">
-
-            <RadioButton
-                android:id="@+id/walkButton"
-                style="@style/TextAppearance.MaterialComponents.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="59dp"
-                android:layout_weight="1"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-                android:text="Walk" />
-
-            <RadioButton
-                android:id="@+id/driveButton"
-                style="@style/TextAppearance.MaterialComponents.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="Drive" />
-
-            <RadioButton
-                android:id="@+id/busButton"
-                style="@style/TextAppearance.MaterialComponents.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:text="Bus" />
-
-        </RadioGroup>
-
-    </androidx.appcompat.widget.Toolbar>
 
     <ImageButton
         android:id="@+id/goButton"
@@ -168,7 +110,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="70dp"
         android:backgroundTint="@color/bisonYello"
         android:backgroundTintMode="src_in"
         android:contentDescription="go button"
@@ -177,7 +119,7 @@
         android:scaleX="-1"
         android:tint="@color/bisonGreen"
         android:tintMode="src_in"
-        app:layout_constraintBottom_toTopOf="@+id/modeToolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/abc_vector_test" />
 
@@ -201,3 +143,61 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<androidx.appcompat.widget.Toolbar-->
+<!--android:id="@+id/modeToolbar"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:background="@color/bisonGreen"-->
+<!--android:elevation="5dp"-->
+<!--android:gravity="center|center_horizontal"-->
+<!--android:minHeight="?attr/actionBarSize"-->
+<!--android:theme="?attr/actionBarTheme"-->
+<!--app:contentInsetStart="0dp"-->
+<!--app:layout_constraintBottom_toBottomOf="parent"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent">-->
+
+<!--<RadioGroup-->
+<!--    android:id="@+id/modeButtonGroup"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:gravity="center_horizontal"-->
+<!--    android:orientation="horizontal"-->
+<!--    tools:layout_editor_absoluteX="1dp"-->
+<!--    tools:layout_editor_absoluteY="462dp">-->
+
+<!--    <RadioButton-->
+<!--        android:id="@+id/walkButton"-->
+<!--        style="@style/TextAppearance.MaterialComponents.Button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="59dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:button="@null"-->
+<!--        android:checked="true"-->
+<!--        android:gravity="center"-->
+<!--        android:text="Walk" />-->
+
+<!--    <RadioButton-->
+<!--        android:id="@+id/driveButton"-->
+<!--        style="@style/TextAppearance.MaterialComponents.Button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:button="@null"-->
+<!--        android:gravity="center"-->
+<!--        android:text="Drive" />-->
+
+<!--    <RadioButton-->
+<!--        android:id="@+id/busButton"-->
+<!--        style="@style/TextAppearance.MaterialComponents.Button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:button="@null"-->
+<!--        android:gravity="center"-->
+<!--        android:text="Bus" />-->
+
+<!--</RadioGroup>-->
+
+<!--</androidx.appcompat.widget.Toolbar>-->
