@@ -7,13 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-
 import android.os.Build;
 import android.os.Bundle;
 
@@ -41,15 +34,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -137,7 +127,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchActivity = new Intent(MapsActivity.this, StartingActivity.class);
+                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(launchActivity);
             }
         });
@@ -147,7 +137,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchActivity = new Intent(MapsActivity.this, StartingActivity.class);
+                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(launchActivity);
             }
         });

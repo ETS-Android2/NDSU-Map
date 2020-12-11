@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class StartingActivity extends AppCompatActivity {
+public class BuildingActivity extends AppCompatActivity {
 
     private static final String TAG = "StartingActivity";
 
@@ -111,7 +110,7 @@ public class StartingActivity extends AppCompatActivity {
         if(buildingsToPass.size()==2){
             changeItem(position, "Destination");
             //go to map page
-            Intent launchactivity = new Intent(StartingActivity.this, MapsActivity.class);
+            Intent launchactivity = new Intent(BuildingActivity.this, MapsActivity.class);
             launchactivity.putExtra("places", buildingsToPass);
             startActivity(launchactivity);
         }
