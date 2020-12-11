@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder>{
     private ArrayList<BuildingItem> buildingList;
@@ -75,6 +76,12 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     @Override
     public int getItemCount(){
         return buildingList.size();
+    }
+
+    public void filterList(ArrayList<BuildingItem> building)
+    {
+        this.buildingList = building;
+        this.notifyDataSetChanged();
     }
 
 }

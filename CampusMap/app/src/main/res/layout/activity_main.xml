@@ -68,7 +68,7 @@
         android:id="@+id/map_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="164dp"
         android:width="1.5in"
         android:backgroundTint="@color/common_google_signin_btn_text_dark"
         android:elevation="6dp"
@@ -85,5 +85,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/logo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:srcCompat="@drawable/ndsu2"-->
+<!--        tools:layout_editor_absoluteX="66dp"-->
+<!--        tools:layout_editor_absoluteY="647dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/map_btn"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
