@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -108,8 +109,19 @@ public class MapsActivity extends AppCompatActivity
         final TextInputEditText fromAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_From);
         final TextInputEditText toAddressEdit = (TextInputEditText) findViewById(R.id.editAddess_To);
         estTime = (TextView) findViewById(R.id.estimateTime);
+        final Button homeBtn = (Button)findViewById(R.id.returnBtn);
         //final RadioGroup modeButtons = (RadioGroup) findViewById(R.id.modeButtonGroup);
         //checkedMode = getCheckedMode(modeButtons);
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent launchActivity = new Intent(MapsActivity.this, MainActivity.class);
+                startActivity(launchActivity);
+
+            }
+        });
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
