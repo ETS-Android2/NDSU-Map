@@ -1,14 +1,10 @@
 package com.example.campus_map;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,19 +13,14 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +29,6 @@ import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -119,7 +109,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                Intent launchactivity = new Intent(MapsActivity.this, StartingActivity.class);
                 startActivity(launchactivity);
             }
         });
@@ -129,7 +119,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                Intent launchactivity = new Intent(MapsActivity.this, StartingActivity.class);
                 startActivity(launchactivity);
             }
         });
