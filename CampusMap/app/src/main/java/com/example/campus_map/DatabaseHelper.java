@@ -44,14 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME3 = "Direction_table";
     public static final String Direction_col1 = "ID";
     public static final String Direction_col2 = "RouteID";
-    public static final String Direction_col3 = "Longtitude";
+    public static final String Direction_col3 = "Longitude";
     public static final String Direction_col4 = "Latitude";
     public static final String Direction_col5 = "Sequence";
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 7);
+        super(context, DATABASE_NAME, null, 8);
     }
 
     @Override
@@ -86,20 +86,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "VALUES('Memorial Union'," + imageRes[4] + ",'','Bookstore, Card Center, Design&Sign, One Stop, Student Activities Office, Student Government, Thundar\"s Game Room, Union Dining Center, US Bank')";
         db.execSQL(union);
 
+
         // create route table
+        String query2 = "create table " + TABLE_NAME2 + "(" + Route_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Route_col2 + " TEXT, "
+                + Route_col3 + " TEXT, " + Route_col4 + " TEXT)";
+        db.execSQL(query2);
 
         // insert route table data
+        String MtoQ = "INSERT INTO " + TABLE_NAME2 + "(" + Route_col2 + "," + Route_col3 + "," + Route_col4 + ") VALUES('Quentin Burdick Building', 'Minard Hall'," +
+                "'Walk out from the North door of Minard Hall; Head North; Turn Left at Morrill Hall; Enter the East door of Morrill Hall; Go to the second floor of Morrill Hall;" +
+                "Head North; Walk through the tunnel from Morrill Hall to Hultz Hall; Keep heading North; Walk through the tunnel from Hultz Hall to Quentin Burdick Building; You are at " +
+                "the second floor of the Quentin Burdick Building;')";
+
+        String QtoU = "INSERT INTO " + TABLE_NAME2 + "(" + Route_col2 + "," + Route_col3 + "," + Route_col4 + ") VALUES('Memorial Union', 'Quentin Burdick Building'," +
+                "'Go to the second floor of the Quentin Burdick Building; Head South; Walk through the tunnel from Quentin Burdick Building to Hultz Hall; Keep heading South;" +
+                "Turn left at the entry of another tunnel; Head East; Enter Dunbar Hall; Walk out from the East door of Dunbar Hall; Head East; Enter the West door of Memorial Union')";
+
+        String UtoA = "INSERT INTO " + TABLE_NAME2 + "(" + Route_col2 + "," + Route_col3 + "," + Route_col4 + ") VALUES('A. Glenn Hill Center', 'Memorial Union'," +
+                "'Walk out from the East door of Memorial Union; Head East; Enter the West door of A. Glenn Hill Center;')";
+
+        db.execSQL(MtoQ);
+        db.execSQL(QtoU);
+        db.execSQL(UtoA);
+
 
         // create direction table
+        String query3 = "create table " + TABLE_NAME3 + "(" + Direction_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Direction_col2 + " INTEGER, "
+                + Direction_col3 + " TEXT, " + Direction_col4 + " TEXT, " + Direction_col5 + " INTEGER, FOREIGN KEY("+ Direction_col2 + ") REFERENCES "
+                + TABLE_NAME2 + " (" + Route_col1+"))";
+        db.execSQL(query3);
 
         //insert direction table data
+        String MtoQDirection = "INSERT INTO " + TABLE_NAME3 + "(" + Direction_col2 + "," + Direction_col3 + "," + Direction_col4 + "," + Direction_col5 + ") " +
+                "VALUES(1, '46.89154275176031', '-96.8027488328993', 1), (1, '46.89244644583737', '-96.80279767300239', 2), " +
+                "(1, '46.892491124314866', '-96.80328225161705', 3), (1, '46.89359934932082', '-96.8034189499907', 4)";
+        db.execSQL(MtoQDirection);
 
+        String QtoUDirection = "INSERT INTO " + TABLE_NAME3 + "(" + Direction_col2 + "," + Direction_col3 + "," + Direction_col4 + "," + Direction_col5 + ") " +
+                "VALUES(2, '46.89359677884727', '-96.80343565284473', 1), (2, '46.89317810495277', '-96.80349753884032', 2), " +
+                "(2, '46.89324576964199', '-96.80215461273599', 3), (2, '46.8931157878145', '-96.80138010836264', 4)";
+        db.execSQL(QtoUDirection);
+
+        String UtoADirection = "INSERT INTO " + TABLE_NAME3 + "(" + Direction_col2 + "," + Direction_col3 + "," + Direction_col4 + "," + Direction_col5 + ") " +
+                "VALUES(3, '46.89317254101427', '-96.80027050427611', 1), (3, '46.89317701504675', '-96.7997096039748', 2)";
+        db.execSQL(UtoADirection);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME1;
+        String query2 = "DROP TABLE IF EXISTS " + TABLE_NAME2;
+        String query3 = "DROP TABLE IF EXISTS " + TABLE_NAME3;
         db.execSQL(query);
+        db.execSQL(query2);
+        db.execSQL(query3);
         onCreate(db);
     }
 
@@ -121,6 +161,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Building_col3))));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col4)));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col5)));
+                arrayList.add(colData);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+    public ArrayList<ArrayList<String>> getAllRouteData()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
+        ArrayList<String> colData;
+
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME2, null);
+        if(cursor.moveToFirst())
+        {
+            do {
+                colData = new ArrayList<>();
+                colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Route_col1))));
+                colData.add(cursor.getString(cursor.getColumnIndex(Route_col2)));
+                colData.add(cursor.getString(cursor.getColumnIndex(Route_col3)));
+                colData.add(cursor.getString(cursor.getColumnIndex(Route_col4)));
+                arrayList.add(colData);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+    public ArrayList<String> getRouteData(String destination, String starting)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String> colData = new ArrayList();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME2 + " where " + Route_col2 + " = ? AND " + Route_col3 + " = ?", new String[]{destination, starting});
+
+        if(cursor.moveToFirst())
+        {
+            colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Route_col1))));
+            colData.add(cursor.getString(cursor.getColumnIndex(Route_col2)));
+            colData.add(cursor.getString(cursor.getColumnIndex(Route_col3)));
+            colData.add(cursor.getString(cursor.getColumnIndex(Route_col4)));
+        }
+        cursor.close();
+        return colData;
+    }
+
+    public ArrayList<ArrayList<String>> getRouteDirection(int routeId)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
+        ArrayList<String> colData;
+
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME3 + " where " + Direction_col2 + " = ?", new String[]{String.valueOf(routeId)});
+        if(cursor.moveToFirst())
+        {
+            do {
+                colData = new ArrayList<>();
+                colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Direction_col1))));
+                colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Direction_col2))));
+                colData.add(cursor.getString(cursor.getColumnIndex(Direction_col3)));
+                colData.add(cursor.getString(cursor.getColumnIndex(Direction_col4)));
+                colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Direction_col5))));
                 arrayList.add(colData);
             } while(cursor.moveToNext());
         }

@@ -51,13 +51,6 @@ public class BuildingActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
 
         data = db.getBuildingData();
-        // test first Building item in data (works properly)
-//        ArrayList firstItem = data.get(0);
-//        building.setText(firstItem.get(1).toString());
-//        img.setImageResource(Integer.parseInt(firstItem.get(2).toString()));
-//        altName.setText(firstItem.get(3).toString());
-//        dept.setText(firstItem.get(4).toString());
-//        info.setText(firstItem.get(5).toString());
 
         //populate exampleList with all database entries as ExampleItem objects
         for(ArrayList element : data) {
