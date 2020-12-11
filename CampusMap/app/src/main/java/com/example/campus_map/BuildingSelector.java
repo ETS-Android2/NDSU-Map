@@ -19,7 +19,7 @@ public class BuildingSelector extends AppCompatActivity {
 
         ArrayList<BuildingItem> buildingList = new ArrayList<>();
 
-        //populate exampleList with all database entries as ExampleItem objects
+        // populate buildingList with all database entries as BuildingItem objects
 
         mRecyclerView = findViewById(R.id.recyclerView);
         //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
