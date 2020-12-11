@@ -162,6 +162,9 @@ public class MapsActivity extends AppCompatActivity
         //move mylocationButton to the right-bottom
         Log.d(TAG, "onMapReady()");
 
+        map = googleMap;
+        enableMyLocation();
+
         View mapView = mapFragment.getView();
         View locationButton = mapView.findViewWithTag("GoogleMapMyLocationButton");
         if (locationButton != null) {
@@ -177,6 +180,8 @@ public class MapsActivity extends AppCompatActivity
         });
 
         map = googleMap;
+        enableMyLocation();
+
 
         // Add a marker in Sydney and move the camera
         LatLng ndsu = new LatLng(46.898008230849385, -96.80244942610898);
@@ -236,7 +241,7 @@ public class MapsActivity extends AppCompatActivity
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
-        //enableMyLocation();
+
 
     }
 
