@@ -3,7 +3,6 @@ package com.example.campus_map;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -22,12 +21,12 @@ public class StartingActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
 
-    private ArrayList<ArrayList<String>> data;
+    private ArrayList<ArrayList<String>> buildings;
 
     private TextView building, altName, dept, info;
     private ImageView img;
 
-    private ArrayList<BuildingItem> exampleList = new ArrayList<>();  //beginning of old buildingselector
+    private ArrayList<BuildingItem> buildingList = new ArrayList<>();  //beginning of old buildingselector
     private ArrayList<String> buildingsToPass = new ArrayList<>();   //mega important arraylist, max size 2
 
     //building selector private fields
@@ -44,7 +43,7 @@ public class StartingActivity extends AppCompatActivity {
         setContentView(R.layout.building_selector);
 
         // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.selectionToolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
@@ -59,22 +58,22 @@ public class StartingActivity extends AppCompatActivity {
         //initialize database
         db = new DatabaseHelper(this);
 
-        data = db.getBuildingData();
+        buildings = db.getBuildingData();
 
-        //populate exampleList with all database entries as ExampleItem objects
-        for(ArrayList element : data) {
+        //populate buildingList with all database entries as BuildingItem objects
+        for(ArrayList building : buildings) {
 //            ExampleItem ex = new ExampleItem(element.img, element.building, element.altName, element.dept, element.info);
-            String building = element.get(1).toString();
-            String altName = element.get(3).toString();
-            String dept = element.get(4).toString();
-            BuildingItem ex = new BuildingItem(Integer.parseInt(element.get(2).toString()), building, altName, dept);
-            exampleList.add(ex);
+            String name = building.get(1).toString();
+            String altName = building.get(3).toString();
+            String dept = building.get(4).toString();
+            BuildingItem bi = new BuildingItem(Integer.parseInt(building.get(2).toString()), name, altName, dept);
+            buildingList.add(bi);
         }
 
         mRecyclerView = findViewById(R.id.recyclerView);
         //mRecyclerView = setHasFixedSize(true); only if recycler view won't change in size
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new BuildingAdapter(exampleList);
+        mAdapter = new BuildingAdapter(buildingList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -94,13 +93,13 @@ public class StartingActivity extends AppCompatActivity {
     }
 
     public void changeItem(int position, String text){
-        exampleList.get(position).changeText2(text);
+        buildingList.get(position).changeText2(text);
         mAdapter.notifyItemChanged(position);
 
     }
 
     public void passBuildings(int position){
-        buildingsToPass.add(exampleList.get(position).getBuilding());
+        buildingsToPass.add(buildingList.get(position).getBuilding());
         if(buildingsToPass.size() == 1){
             changeItem(position, "Starting Point");
 

@@ -6,11 +6,11 @@ public class BuildingItem {
     private String altName;
     private String dept;
 
-    public BuildingItem(int imageResource, String text1, String text2, String text3) {
+    public BuildingItem(int imageResource, String name, String alternateName, String department) {
         mImageResource = imageResource;
-        building = text1;
-        altName = text2;
-        dept = text3;
+        building = name;
+        altName = alternateName;
+        dept = department;
     }
 
     public int getImageResource() {
