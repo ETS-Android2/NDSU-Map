@@ -97,7 +97,7 @@ public class StartingActivity extends AppCompatActivity {
         buildingsToPass.add(exampleList.get(position).getBuilding());
         if(buildingsToPass.size()==2){
             //go to map page
-            Intent launchactivity = new Intent(StartingActivity.this, DestinationActivity.class);
+            Intent launchactivity = new Intent(StartingActivity.this, MapsActivity.class);
             startActivity(launchactivity);
         }
     }
