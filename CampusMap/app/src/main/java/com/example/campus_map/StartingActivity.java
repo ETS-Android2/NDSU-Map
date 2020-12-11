@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class BuildingActivity extends AppCompatActivity {
+public class StartingActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
 
@@ -90,7 +90,7 @@ public class BuildingActivity extends AppCompatActivity {
         buildingsToPass.add(exampleList.get(position).getBuilding());
         if(buildingsToPass.size()==2){
             //go to map page
-            Intent launchactivity = new Intent(BuildingActivity.this, MapsActivity.class);
+            Intent launchactivity = new Intent(StartingActivity.this, MapsActivity.class);
             startActivity(launchactivity);
         }
     }
