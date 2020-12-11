@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.content.Intent;
 
@@ -110,10 +112,11 @@ public class BuildingActivity extends AppCompatActivity {
         }
         if(buildingsToPass.size()==2){
             changeItem(position, "Destination");
-            //go to map page
-            Intent launchactivity = new Intent(BuildingActivity.this, MapsActivity.class);
-            launchactivity.putExtra("places", buildingsToPass);
-            startActivity(launchactivity);
+
+            // go to map page
+            Intent launchActivity = new Intent(BuildingActivity.this, MapsActivity.class);
+            launchActivity.putExtra("places", buildingsToPass);
+            startActivity(launchActivity);
         }
     }
 }

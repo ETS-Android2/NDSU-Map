@@ -209,7 +209,7 @@ public class MapsActivity extends AppCompatActivity
         //safe check for direct view map
         if(places != null) {
 
-            TextInputLayout layout = findViewById(R.id.editAddess_Form_Layout);
+            TextInputLayout layout = findViewById(R.id.editAddress_From_Layout);
             //            //EditText from = findViewById(R.id.editAddess_From);
             layout.setHint("From: " + places.get(0));
             TextInputLayout layout_to = findViewById(R.id.editAddess_To_Layout);
