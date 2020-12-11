@@ -126,7 +126,13 @@ public class MapsActivity extends AppCompatActivity
                 if(places == null){
                     displayAlertDialog("Missing Address", "Please Select Starting and Destination Building");
                 }else{
-                    displayAlertDialog("Route Detail", db.getRouteData(places.get(1), places.get(0)).get(3).toString());
+                    String[] direction = db.getRouteData(places.get(1), places.get(0)).get(3).split(";");
+                    String routeDetail = "";
+                    for(String s : direction) {
+                        s = s.replaceFirst("\\s", "");
+                        routeDetail += (s + "\n");
+                    }
+                    displayAlertDialog("Route Detail", routeDetail);
                 }
             }
         });

@@ -52,10 +52,10 @@ public class BuildingActivity extends AppCompatActivity {
 
         //assign variable
 
-        building = findViewById(R.id.buildingName);
-        altName = findViewById(R.id.altName);
-        dept = findViewById(R.id.department);
-        img = findViewById(R.id.buildingImg);
+//        building = findViewById(R.id.buildingName);
+//        altName = findViewById(R.id.altName);
+//        dept = findViewById(R.id.department);
+//        img = findViewById(R.id.buildingImg);
 
         //initialize database
         db = new DatabaseHelper(this);
