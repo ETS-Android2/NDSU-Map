@@ -120,3 +120,4 @@ public class BuildingActivity extends AppCompatActivity {
         }
     }
 }
+//citation: Coding In Flow's "RecyclerView + CardView Android Studio Tutorial
