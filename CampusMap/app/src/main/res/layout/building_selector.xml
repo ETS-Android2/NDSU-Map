@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,15 +15,38 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:subtitleTextColor="@color/white"
-        app:titleTextColor="@color/bisonYello" >
+        app:titleTextColor="@color/bisonYello">
 
-        <TextView
-            android:id="@+id/SelectTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Select a Starting Building"
-            android:textColor="@color/bisonYello"
-            android:textSize="30sp"></TextView>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            tools:layout_editor_absoluteX="16dp">
+
+            <TextView
+                android:id="@+id/SelectTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Select a Starting Building"
+                android:textColor="@color/bisonYello"
+                android:textSize="30sp"></TextView>
+
+            <EditText
+                android:id="@+id/editTextSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter search term"
+                tools:layout_constraintTop_creator="1"
+                tools:layout_constraintRight_creator="1"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -52,13 +52,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 12);
+        super(context, DATABASE_NAME, null, 13);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // create building table
-        String query = "create table " + TABLE_NAME1 + "(" + Building_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Building_col2 + " TEXT, "
+        String query = "create table if not exists " + TABLE_NAME1 + "(" + Building_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Building_col2 + " TEXT, "
                 + Building_col3 + " INTEGER, " + Building_col4 + " TEXT, " + Building_col5 + " TEXT)";
         db.execSQL(query);
 
@@ -114,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // create route table
-        String query2 = "create table " + TABLE_NAME2 + "(" + Route_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Route_col2 + " TEXT, "
+        String query2 = "create table if not exists " + TABLE_NAME2 + "(" + Route_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Route_col2 + " TEXT, "
                 + Route_col3 + " TEXT, " + Route_col4 + " TEXT, " + Route_col5 + " TEXT)";
         db.execSQL(query2);
 
@@ -151,7 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(UtoD);
 
         // create direction table
-        String query3 = "create table " + TABLE_NAME3 + "(" + Direction_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Direction_col2 + " INTEGER, "
+        String query3 = "create table if not exists " + TABLE_NAME3 + "(" + Direction_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Direction_col2 + " INTEGER, "
                 + Direction_col3 + " TEXT, " + Direction_col4 + " TEXT, " + Direction_col5 + " INTEGER, FOREIGN KEY("+ Direction_col2 + ") REFERENCES "
                 + TABLE_NAME2 + " (" + Route_col1+"))";
         db.execSQL(query3);
@@ -215,7 +215,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 colData = new ArrayList<>();
                 colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Building_col1))));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col2)));
-//                colData.add(new String(cursor.getBlob(cursor.getColumnIndex(Building_col3))));
                 colData.add(String.valueOf(cursor.getInt(cursor.getColumnIndex(Building_col3))));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col4)));
                 colData.add(cursor.getString(cursor.getColumnIndex(Building_col5)));

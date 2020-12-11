@@ -114,20 +114,6 @@ public class MapsActivity extends AppCompatActivity
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String from = fromAddressEdit.getText().toString();
-//                String to = toAddressEdit.getText().toString();
-//
-//                if (from.equals("") && to.equals("")) {
-//                    displayAlertDialog("Please fill in where you are from and where you're going.");
-//                } else if (from == "") {
-//                    displayAlertDialog("Select where you are currently located above.");
-//                } else if (to == "") {
-//                    displayAlertDialog("Select where you are going above.");
-//                } else {
-//                    // start routing
-//
-//                    // get to and from addr
-//                }
                 if(places == null){
                     displayAlertDialog("Missing Address", "Please Select Starting and Destination Building");
                 }else{
@@ -162,19 +148,6 @@ public class MapsActivity extends AppCompatActivity
             }
         });
 
-//        setCheckedModeStyle(modeButtons);
-//        modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
-//                checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
-//
-//                checkedMode = (RadioButton) findViewById(checkedId);
-//                setCheckedModeStyle(group);
-//            }
-//        });
-
-
         // test Route and Direction table
         db = new DatabaseHelper(this);
         routeData = db.getAllRouteData();
@@ -204,18 +177,15 @@ public class MapsActivity extends AppCompatActivity
         });
 
         map = googleMap;
-        //moveCompassButton(mapView);
 
         // Add a marker in Sydney and move the camera
         LatLng ndsu = new LatLng(46.898008230849385, -96.80244942610898);
-        //map.addMarker(new MarkerOptions().position(ndsu).title("Marker in Sydney"));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(ndsu, DEFAULT_ZOOM));
 
         //safe check for direct view map
         if(places != null) {
 
             TextInputLayout layout = findViewById(R.id.editAddress_From_Layout);
-            //            //EditText from = findViewById(R.id.editAddess_From);
             layout.setHint("From: " + places.get(0));
             TextInputLayout layout_to = findViewById(R.id.editAddess_To_Layout);
             layout_to.setHint("To: " + places.get(1));
@@ -228,10 +198,6 @@ public class MapsActivity extends AppCompatActivity
             Log.d("routeprint", routeDirection.toString());
 
 
-
-
-//        int size = routeDirection.size();
-//        LatLng test = new LatLng(Double.parseDouble(routeDirection.get().toString()),Double.parseDouble(routeDirection.get(i).toString());)
             LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
 
             int size = routeDirection.size();
@@ -283,7 +249,6 @@ public class MapsActivity extends AppCompatActivity
 
             Log.d(TAG, "moveCompassButton()");
 
-            // View view = mapView.findViewWithTag("GoogleMapCompass");
             View view = mapView.findViewWithTag("GoogleMapMyLocationButton");
 
             // move the compass button to the right side, centered
@@ -291,10 +256,6 @@ public class MapsActivity extends AppCompatActivity
 
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-//            set button in middle
-//            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
-//            layoutParams.setMarginEnd(18);
-            //set button in the bottom
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             layoutParams.setMargins(200, 0, 0, 170);
 
@@ -395,34 +356,4 @@ public class MapsActivity extends AppCompatActivity
         builder.create().show();
     }
 
-//    private GoogleMap mMap;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_maps);
-//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-//    }
-//
-//    /**
-//     * Manipulates the map once available.
-//     * This callback is triggered when the map is ready to be used.
-//     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-//     * we just add a marker near Sydney, Australia.
-//     * If Google Play services is not installed on the device, the user will be prompted to install
-//     * it inside the SupportMapFragment. This method will only be triggered once the user has
-//     * installed Google Play services and returned to the app.
-//     */
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//    }
 }

@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.content.Intent;
 
@@ -29,6 +30,7 @@ public class BuildingActivity extends AppCompatActivity {
 
     private TextView building, altName, dept, info;
     private ImageView img;
+    private EditText buildingSearch;
 
     private ArrayList<BuildingItem> buildingList = new ArrayList<>();  //beginning of old buildingselector
     private ArrayList<String> buildingsToPass = new ArrayList<>();   //mega important arraylist, max size 2
@@ -52,13 +54,6 @@ public class BuildingActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        //assign variable
-
-//        building = findViewById(R.id.buildingName);
-//        altName = findViewById(R.id.altName);
-//        dept = findViewById(R.id.department);
-//        img = findViewById(R.id.buildingImg);
-
         //initialize database
         db = new DatabaseHelper(this);
 
@@ -66,11 +61,11 @@ public class BuildingActivity extends AppCompatActivity {
 
         //populate buildingList with all database entries as BuildingItem objects
         for(ArrayList building : buildings) {
-//            ExampleItem ex = new ExampleItem(element.img, element.building, element.altName, element.dept, element.info);
             String name = building.get(1).toString();
             String altName = building.get(3).toString();
             String dept = building.get(4).toString();
-            BuildingItem bi = new BuildingItem(Integer.parseInt(building.get(2).toString()), name, altName, dept);
+            int id = Integer.parseInt(building.get(0).toString());
+            BuildingItem bi = new BuildingItem(id, Integer.parseInt(building.get(2).toString()), name, altName, dept);
             buildingList.add(bi);
         }
 
@@ -83,17 +78,30 @@ public class BuildingActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new BuildingAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(int position){
-                //changeItem(position, "Clicked");
-                passBuildings(position);
-                //change color
-                //TextView clicked = findViewById(R.id.textView2);
-                //clicked.setTextColor(Color.parseColor("#FF0000"));
+            public void onItemClick(int id){
+                passBuildings(id);
             }
         });
         //end of old buildingselector
 
+        //  search feature
+        buildingSearch = (EditText) findViewById(R.id.editTextSearch);
+        buildingSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
     }
 
     public void changeItem(int position, String text){
@@ -109,6 +117,7 @@ public class BuildingActivity extends AppCompatActivity {
             changeItem(position, "Starting Point");
             TextView title = findViewById(R.id.SelectTitle);
             title.setText("Select a Destination Building");
+            buildingSearch.getText().clear();
         }
         if(buildingsToPass.size()==2){
             changeItem(position, "Destination");
@@ -118,6 +127,20 @@ public class BuildingActivity extends AppCompatActivity {
             launchActivity.putExtra("places", buildingsToPass);
             startActivity(launchActivity);
         }
+    }
+
+    private void filter(String text)
+    {
+        ArrayList<BuildingItem> filterNames = new ArrayList<>();
+
+        //looping through existing elements
+        for(BuildingItem b: buildingList)
+        {
+            String buildingName = b.getBuilding();
+            if(buildingName.toLowerCase().contains(text.toLowerCase()))
+                filterNames.add(b);
+        }
+        mAdapter.filterList(filterNames);
     }
 }
 //citation: Coding In Flow's "RecyclerView + CardView Android Studio Tutorial 
