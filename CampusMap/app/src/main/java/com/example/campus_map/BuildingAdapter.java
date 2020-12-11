@@ -79,3 +79,4 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
 
 }
 
+//citation: Coding In Flow's "RecyclerView + CardView Android Studio Tutorial
