@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -227,7 +228,7 @@ public class MapsActivity extends AppCompatActivity
                         new PolylineOptions().add(
                                 new LatLng(srcLat, srcLong),
                                 new LatLng(destLat, destLong)
-                        )
+                        ).color(Color.BLUE)
                 );
             }
 
