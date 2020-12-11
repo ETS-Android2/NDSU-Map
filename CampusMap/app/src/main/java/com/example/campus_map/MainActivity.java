@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent launchActivity = new Intent(MainActivity.this, StartingActivity.class);
+                Intent launchActivity = new Intent(MainActivity.this, BuildingActivity.class);
                 startActivity(launchActivity);
 
             }

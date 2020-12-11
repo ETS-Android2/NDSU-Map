@@ -127,7 +127,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchActivity = new Intent(MapsActivity.this, StartingActivity.class);
+                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(launchActivity);
             }
         });
@@ -137,7 +137,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchActivity = new Intent(MapsActivity.this, StartingActivity.class);
+                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
                 startActivity(launchActivity);
             }
         });
