@@ -33,3 +33,4 @@ public class BuildingItem {
         altName = text;
     }
 }
+//citation: Coding In Flow's "RecyclerView + CardView Android Studio Tutorial
