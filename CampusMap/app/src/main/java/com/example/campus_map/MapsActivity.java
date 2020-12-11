@@ -1,10 +1,12 @@
 package com.example.campus_map;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,23 +16,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -39,8 +38,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-
-
+import java.util.ArrayList;
 
 
 public class MapsActivity extends AppCompatActivity
@@ -73,6 +71,13 @@ public class MapsActivity extends AppCompatActivity
 
     private static final float DEFAULT_ZOOM = 15f;
 
+    //database variable
+    private DatabaseHelper db;
+    private ArrayList<ArrayList<String>> routeData;
+    private ArrayList<ArrayList<String>> routeDirection;
+    private ArrayList<String> route;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +120,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                Intent launchActivity = new Intent(MapsActivity.this, StartingActivity.class);
                 startActivity(launchActivity);
             }
         });
@@ -125,7 +130,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                Intent launchActivity = new Intent(MapsActivity.this, StartingActivity.class);
                 startActivity(launchActivity);
             }
         });
@@ -141,6 +146,13 @@ public class MapsActivity extends AppCompatActivity
                 setCheckedModeStyle(group);
             }
         });
+
+
+        // test Route and Direction table
+        db = new DatabaseHelper(this);
+        routeData = db.getAllRouteData();
+        route = db.getRouteData("Quentin Burdick Building", "Minard Hall");
+        routeDirection = db.getRouteDirection(2);
 
     }
 
