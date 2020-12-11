@@ -2,21 +2,18 @@ package com.example.campus_map;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.Intent;
-
-//building selector imports
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-//end of building selector imports
 
 import java.util.ArrayList;
 
-public class BuildingActivity extends AppCompatActivity {
+public class DestinationActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
 
@@ -38,7 +35,7 @@ public class BuildingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.building_selector);
+        setContentView(R.layout.activity_destination);
 
         //assign variable
 
@@ -97,8 +94,10 @@ public class BuildingActivity extends AppCompatActivity {
         buildingsToPass.add(exampleList.get(position).getBuilding());
         if(buildingsToPass.size()==2){
             //go to map page
-            Intent launchactivity = new Intent(BuildingActivity.this, DestinationActivity.class);
+            Intent launchactivity = new Intent(DestinationActivity.this, MapsActivity.class);
             startActivity(launchactivity);
         }
     }
+
+
 }
