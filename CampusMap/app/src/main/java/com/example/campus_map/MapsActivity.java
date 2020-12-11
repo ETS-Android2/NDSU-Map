@@ -42,6 +42,12 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -72,6 +78,8 @@ public class MapsActivity extends AppCompatActivity
     private GoogleMap map;
 
     private RadioButton checkedMode;
+
+    private static final String DESTINATION_API_KEY = "AIzaSyC4Sa8NwODZeMd030UPFj8Cp_z-V9CfpqY";
 
     private static final float DEFAULT_ZOOM = 15f;
 
@@ -105,19 +113,10 @@ public class MapsActivity extends AppCompatActivity
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String from = fromAddressEdit.getText().toString();
-                String to = toAddressEdit.getText().toString();
-
-                if (from.equals("") && to.equals("")) {
+                if (places == null) {
                     displayAlertDialog("Please fill in where you are from and where you're going.");
-                } else if (from == "") {
-                    displayAlertDialog("Select where you are currently located above.");
-                } else if (to == "") {
-                    displayAlertDialog("Select where you are going above.");
                 } else {
-                    // start routing
-
-                    // get to and from addr
+                    // show directions
                 }
             }
         });
@@ -146,11 +145,33 @@ public class MapsActivity extends AppCompatActivity
         modeButtons.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
-                checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
 
-                checkedMode = (RadioButton) findViewById(checkedId);
-                setCheckedModeStyle(group);
+                if (places == null) {
+                    displayAlertDialog("Please fill in where you are from and where you're going.");
+                } else {
+                    checkedMode.setBackgroundColor(getResources().getColor(R.color.bisonGreen));
+                    checkedMode.setTextColor(getResources().getColor(R.color.bisonYello));
+
+                    checkedMode = (RadioButton) findViewById(checkedId);
+                    setCheckedModeStyle(group);
+
+                    switch (checkedMode.getId()) {
+                        case R.id.walkButton:
+                            getWalkingRoute();
+                            break;
+                        case R.id.driveButton:
+                            try {
+                                getDrivingRoute();
+                            } catch (IOException ioe) {
+                                Log.d("error", ioe.getMessage());
+                            }
+                            break;
+                        case R.id.busButton:
+                            // getBusRoute();
+                            break;
+                    }
+
+                }
             }
         });
 
@@ -190,58 +211,73 @@ public class MapsActivity extends AppCompatActivity
 
         //safe check for direct view map
         if(places != null) {
-
-            TextInputLayout layout = findViewById(R.id.editAddess_Form_Layout);
-            //            //EditText from = findViewById(R.id.editAddess_From);
+            TextInputLayout layout = findViewById(R.id.editAddress_From_Layout);
             layout.setHint("From: " + places.get(0));
             TextInputLayout layout_to = findViewById(R.id.editAddess_To_Layout);
             layout_to.setHint("To: " + places.get(1));
 
-
-            route = db.getRouteData(places.get(1), places.get(0));
-            Log.d("routeprint", places.get(0) + places.get(1));
-            Log.d("routeprint", route.get(0));
-            routeDirection = db.getRouteDirection(Integer.parseInt(route.get(0)));
-            Log.d("routeprint", routeDirection.toString());
-
-
-//        int size = routeDirection.size();
-//        LatLng test = new LatLng(Double.parseDouble(routeDirection.get().toString()),Double.parseDouble(routeDirection.get(i).toString());)
-            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
-
-            int size = routeDirection.size();
-            LatLng Start = new LatLng(Double.parseDouble(routeDirection.get(0).get(2)), Double.parseDouble(routeDirection.get(0).get(3)));
-            LatLng Destination = new LatLng(Double.parseDouble(routeDirection.get(size - 1).get(2)), Double.parseDouble(routeDirection.get(size - 1).get(3)));
-            boundsBuilder.include(Start);
-            boundsBuilder.include(Destination);
-
-
-            for (int i = 0; i < size - 1; i++) {
-                Double srcLat = Double.parseDouble(routeDirection.get(i).get(2).toString());
-                Double srcLong = Double.parseDouble(routeDirection.get(i).get(3).toString());
-                Double destLat = Double.parseDouble(routeDirection.get(i + 1).get(2).toString());
-                Double destLong = Double.parseDouble(routeDirection.get(i + 1).get(3).toString());
-
-                // mMap is the Map Object
-                Polyline line = map.addPolyline(
-                        new PolylineOptions().add(
-                                new LatLng(srcLat, srcLong),
-                                new LatLng(destLat, destLong)
-                        )
-                );
-            }
-
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 800, 800, 0));
-
+            getWalkingRoute();
         }
-
-
-
 
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
         enableMyLocation();
+    }
 
+    public void getWalkingRoute() {
+        route = db.getRouteData(places.get(1), places.get(0));
+        Log.d("routeprint", places.get(0) + places.get(1));
+        Log.d("routeprint", route.get(0));
+        routeDirection = db.getRouteDirection(Integer.parseInt(route.get(0)));
+        Log.d("routeprint", routeDirection.toString());
+
+
+//        int size = routeDirection.size();
+//        LatLng test = new LatLng(Double.parseDouble(routeDirection.get().toString()),Double.parseDouble(routeDirection.get(i).toString());)
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+
+        int size = routeDirection.size();
+        LatLng Start = new LatLng(Double.parseDouble(routeDirection.get(0).get(2)), Double.parseDouble(routeDirection.get(0).get(3)));
+        LatLng Destination = new LatLng(Double.parseDouble(routeDirection.get(size - 1).get(2)), Double.parseDouble(routeDirection.get(size - 1).get(3)));
+        boundsBuilder.include(Start);
+        boundsBuilder.include(Destination);
+
+
+        for (int i = 0; i < size - 1; i++) {
+            Double srcLat = Double.parseDouble(routeDirection.get(i).get(2).toString());
+            Double srcLong = Double.parseDouble(routeDirection.get(i).get(3).toString());
+            Double destLat = Double.parseDouble(routeDirection.get(i + 1).get(2).toString());
+            Double destLong = Double.parseDouble(routeDirection.get(i + 1).get(3).toString());
+
+            // mMap is the Map Object
+            Polyline line = map.addPolyline(
+                    new PolylineOptions().add(
+                            new LatLng(srcLat, srcLong),
+                            new LatLng(destLat, destLong)
+                    )
+            );
+        }
+
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 800, 800, 0));
+    }
+
+    public void getDrivingRoute() throws IOException {
+        String origin = places.get(0) + " Fargo, ND";
+        String destination = places.get(1) + " Fargo, ND";
+        String req = String.format("https://maps.googleapis.com/maps/api/directions/json?"
+            + "origin=%s&destination=%s &key=%s", origin, destination, DESTINATION_API_KEY);
+
+        URL url = new URL(req);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        displayAlertDialog("trying...");
+        /* APP CRASHES HERE
+        try {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+        } finally {
+            urlConnection.disconnect();
+        }
+
+         */
     }
 
     /**
