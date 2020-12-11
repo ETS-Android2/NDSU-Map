@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.ExampleViewHolder>{
-    private ArrayList<BuildingItem> mExampleList;
+public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder>{
+    private ArrayList<BuildingItem> buildingList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
@@ -23,18 +23,18 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Exampl
         mListener = listener;
     }
 
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder{
-        public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
-        public TextView mTextView3;
+    public static class BuildingViewHolder extends RecyclerView.ViewHolder{
+        public ImageView buildingImage;
+        public TextView buildingName;
+        public TextView buildingAltName;
+        public TextView buildingDept;
 
-        public ExampleViewHolder(View itemView, OnItemClickListener listener){
+        public BuildingViewHolder(View itemView, OnItemClickListener listener){
             super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-            mTextView3 = itemView.findViewById(R.id.textView3);
+            buildingImage = itemView.findViewById(R.id.buildingImage);
+            buildingName = itemView.findViewById(R.id.buildingName);
+            buildingAltName = itemView.findViewById(R.id.buildingAltName);
+            buildingDept = itemView.findViewById(R.id.buildingDept);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -51,30 +51,30 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Exampl
         }
     }
 
-    public BuildingAdapter(ArrayList<BuildingItem> exampleList){
-        mExampleList = exampleList;
+    public BuildingAdapter(ArrayList<BuildingItem> buildings){
+        buildingList = buildings;
     }
 
     @Override
-    public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_item, parent, false);
-        ExampleViewHolder evh = new ExampleViewHolder(v, mListener);
+    public BuildingViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.building_item, parent, false);
+        BuildingViewHolder evh = new BuildingViewHolder(v, mListener);
         return evh;
     }
 
     @Override
-    public void onBindViewHolder(ExampleViewHolder holder, int position){
-        BuildingItem currentItem = mExampleList.get(position);
+    public void onBindViewHolder(BuildingViewHolder holder, int position){
+        BuildingItem currentItem = buildingList.get(position);
 
-        holder.mImageView.setImageResource(currentItem.getImageResource());
-        holder.mTextView1.setText(currentItem.getBuilding());
-        holder.mTextView2.setText(currentItem.getAltName());
-        holder.mTextView3.setText(currentItem.getDept());
+        holder.buildingImage.setImageResource(currentItem.getImageResource());
+        holder.buildingName.setText(currentItem.getBuilding());
+        holder.buildingAltName.setText(currentItem.getAltName());
+        holder.buildingDept.setText(currentItem.getDept());
     }
 
     @Override
     public int getItemCount(){
-        return mExampleList.size();
+        return buildingList.size();
     }
 }
 

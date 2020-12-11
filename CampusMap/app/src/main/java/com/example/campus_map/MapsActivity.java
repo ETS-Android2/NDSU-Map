@@ -1,14 +1,10 @@
 package com.example.campus_map;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,7 +13,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -38,7 +33,6 @@ import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -105,11 +99,13 @@ public class MapsActivity extends AppCompatActivity
                 if (from.equals("") && to.equals("")) {
                     displayAlertDialog("Please fill in where you are from and where you're going.");
                 } else if (from == "") {
-                    displayAlertDialog("Enter where you are currently located above.");
+                    displayAlertDialog("Select where you are currently located above.");
                 } else if (to == "") {
-                    displayAlertDialog("Enter where you are going above.");
+                    displayAlertDialog("Select where you are going above.");
                 } else {
                     // start routing
+
+                    // get to and from addr
                 }
             }
         });
@@ -119,8 +115,8 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
-                startActivity(launchactivity);
+                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                startActivity(launchActivity);
             }
         });
 
@@ -129,8 +125,8 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent launchactivity = new Intent(MapsActivity.this, BuildingActivity.class);
-                startActivity(launchactivity);
+                Intent launchActivity = new Intent(MapsActivity.this, BuildingActivity.class);
+                startActivity(launchActivity);
             }
         });
 

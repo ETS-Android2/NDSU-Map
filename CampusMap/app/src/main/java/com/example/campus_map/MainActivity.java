@@ -19,16 +19,16 @@ public class MainActivity extends AppCompatActivity {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launchactivity = new Intent(MainActivity.this, BuildingActivity.class);
-                startActivity(launchactivity);
+                Intent launchActivity = new Intent(MainActivity.this, BuildingActivity.class);
+                startActivity(launchActivity);
             }
         });
 
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launchactivity = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(launchactivity);
+                Intent launchActivity = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(launchActivity);
             }
         });
     }

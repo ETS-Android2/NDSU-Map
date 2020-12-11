@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp">
+
+    <!--image-->
+
+    <ImageView
+        android:id="@+id/buildingImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="2dp" />
+
+    <!--name-->
+
+    <!--altname-->
+
+    <!--dept-->
+
+    <!--info-->
+
+    <TextView
+        android:id="@+id/buildingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/buildingImage"
+        android:text="Line 1"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/buildingDept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buildingAltName"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/buildingImage"
+        android:text="Line 2"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/buildingAltName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buildingName"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="-1dp"
+        android:layout_toEndOf="@+id/buildingImage"
+        android:text="Line 2"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+</RelativeLayout>
