@@ -42,7 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartingActivity"></activity>
+        <activity
+            android:name=".StartingActivity"
+            android:label="Select two places(first will be Starting)"></activity>
     </application>
 
 </manifest>

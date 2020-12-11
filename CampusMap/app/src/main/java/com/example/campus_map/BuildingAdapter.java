@@ -76,5 +76,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Exampl
     public int getItemCount(){
         return mExampleList.size();
     }
+
 }
 
