@@ -1,11 +1,11 @@
 # NDSU-Map
 ## How To Use
-* Open with Android Studio (note: select the campus map folder where under the NDSU-Map)
+* Open the project with Android Studio (note: select the campus map folder which is under the NDSU-Map)
 
-* Install Google Play service SDK tools in Android Stutdio
+* Add Google Play service SDK tools in Android Stutdio (note: Goes to File -> Settings -> Appearance & Behavior -> System Settings -> Android SDK -> SDK Tools)
 
-* If Android-Map SDK not useable, replace your own SDK key in `res/values/google_maps_api.xml`
+* If Android-Map SDK not usable, replace your own SDK key in `res/values/google_maps_api.xml`
 
-* And run with emulate ( 6.5 inch screen works fine)
+* Run with emulator
 
 * When you select Starting and Destination building, remember to choose that existing route that inside 'database helper' (Example: select start from Minard to QBB)
