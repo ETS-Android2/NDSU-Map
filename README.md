@@ -2,7 +2,7 @@
 ## How To Use
 * Open with Android Studio (note: select the campus map folder where under the NDSU-Map)
 
-* Install Google Play service SDK tools
+* Install Google Play service SDK tools in Android Stutdio
 
 * If Android-Map SDK not useable, replace your own SDK key in `res/values/google_maps_api.xml`
 
