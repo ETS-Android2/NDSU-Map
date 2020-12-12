@@ -13,6 +13,17 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*******************************************************************************
+ * Reference 1
+ * Title: Part 2 - Adapter
+ * Author: Coding in Flow
+ * URL: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-2-adapter
+ *
+ * Reference 2
+ * Title: Part4 OnItemClickListener
+ * Author: Coding in Flow
+ * URL: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-4-onitemclicklistener
+ ********************************************************************************/
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder>{
     private static ArrayList<BuildingItem> buildingList;
     private OnItemClickListener mListener;

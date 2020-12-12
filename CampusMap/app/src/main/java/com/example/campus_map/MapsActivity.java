@@ -50,7 +50,15 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-
+/*******************************************************************************
+ * Reference 1
+ * Title: Overview | Maps SDK for Android
+ * URL: https://developers.google.com/maps/documentation/android-sdk/overview
+ *
+ * Reference 2
+ * Title: CodePath Android Cliffnotes
+ * URL: https://guides.codepath.com/android
+ ********************************************************************************/
 public class MapsActivity extends AppCompatActivity
         implements
         OnMyLocationButtonClickListener,

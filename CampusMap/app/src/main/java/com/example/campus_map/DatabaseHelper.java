@@ -22,6 +22,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+/*******************************************************************************
+ * Reference 1
+ * Title: Android SQLite Database Tutorial (Select, Insert, Update, Delete)
+ * Author: Singh, M
+ * URL: http://www.codebind.com/android-tutorials-and-examples/android-sqlite-tutorial-example/
+ *
+ * Reference 2
+ * SQLiteOpenHelper : Android Developers
+ * URL: https://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper
+ ********************************************************************************/
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "NDSUMap.db";
 

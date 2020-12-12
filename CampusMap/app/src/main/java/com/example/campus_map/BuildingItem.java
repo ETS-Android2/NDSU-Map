@@ -1,5 +1,11 @@
 package com.example.campus_map;
 
+/*******************************************************************************
+ * Reference 1
+ * Title: Part 1 - Layouts & Model Class
+ * Author: Coding in Flow
+ * URL: https://codinginflow.com/tutorials/android/simple-recyclerview-java/part-1-layouts-model-class
+ ********************************************************************************/
 public class BuildingItem {
     private int mImageResource;
     private String building;
